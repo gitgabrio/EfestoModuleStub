@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.api;
+package stub.module.runtime.model;
 
-public interface StubExecutor {
+import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
 
+public class StubInput extends AbstractEfestoInput<String> {
 
-    String execute(String input);
-
+    public StubInput(FRI fri, String inputData) {
+        super(fri, inputData);
+    }
 }

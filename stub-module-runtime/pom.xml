@@ -16,6 +16,17 @@
       <groupId>org.kie</groupId>
       <artifactId>efesto-runtime-manager-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.kie.efesto</groupId>
+      <artifactId>stub-module-api</artifactId>
+    </dependency>
+    <!-- Test -->
+    <!-- needed to have a RuntimeManager instance -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>efesto-runtime-manager-core</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
 
