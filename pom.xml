@@ -16,6 +16,7 @@
     <drools.version>8.27.0-SNAPSHOT</drools.version>
     <version.org.junit>5.8.2</version.org.junit>
     <version.slf4j>1.7.30</version.slf4j>
+    <version.surefire>2.22.2</version.surefire>
   </properties>
 
   <dependencyManagement>
@@ -72,6 +73,18 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>${version.surefire}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
 
   <modules>
     <module>stub-module-api</module>

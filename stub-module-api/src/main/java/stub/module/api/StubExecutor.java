@@ -18,6 +18,6 @@ package stub.module.api;
 public interface StubExecutor {
 
 
-    void execute(String input);
+    String execute(String input);
 
 }

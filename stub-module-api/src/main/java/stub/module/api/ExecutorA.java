@@ -18,7 +18,7 @@ package stub.module.api;
 public class ExecutorA implements StubExecutor {
 
     @Override
-    public void execute(String input) {
-        System.out.println("Hi all!!! I'm " + this + " and I received " + input);
+    public String execute(String input) {
+        return "Hi all!!! I'm " + this + " and I received " + input;
     }
 }
