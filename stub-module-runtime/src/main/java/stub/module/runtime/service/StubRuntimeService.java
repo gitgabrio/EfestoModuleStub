@@ -21,6 +21,8 @@ import org.kie.efesto.runtimemanager.api.model.EfestoInput;
 import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
 import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 
+import static stub.module.api.CommonConstants.MODEL_TYPE;
+
 public class StubRuntimeService implements KieRuntimeService {
 
     @Override
@@ -31,5 +33,10 @@ public class StubRuntimeService implements KieRuntimeService {
     @Override
     public Optional evaluateInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
         return Optional.empty();
+    }
+
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
     }
 }

@@ -13,11 +13,26 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <drools.version>8.27.0-SNAPSHOT</drools.version>
+    <drools.version>8.28.0-SNAPSHOT</drools.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.kie.efesto</groupId>
+        <artifactId>stub-module-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.kie.efesto</groupId>
+        <artifactId>stub-module-compilation</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.kie.efesto</groupId>
+        <artifactId>stub-module-runtime</artifactId>
+        <version>${project.version}</version>
+      </dependency>
       <dependency>
         <artifactId>efesto-compilation-manager-api</artifactId>
         <groupId>org.kie</groupId>

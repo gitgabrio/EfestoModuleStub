@@ -21,6 +21,8 @@ import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 
+import static stub.module.api.CommonConstants.MODEL_TYPE;
+
 public class StubCompilerService implements KieCompilerService {
 
     @Override
@@ -31,5 +33,10 @@ public class StubCompilerService implements KieCompilerService {
     @Override
     public List processResource(EfestoResource toProcess, EfestoCompilationContext context) {
         return null;
+    }
+
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
     }
 }
