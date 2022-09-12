@@ -30,6 +30,8 @@ import stub.module.api.StubExecutor;
 import stub.module.compilation.model.StubCallableOutput;
 import stub.module.compilation.model.StubResource;
 
+import static stub.module.api.CommonConstants.MODEL_TYPE;
+
 public class StubCompilerService implements KieCompilerService<EfestoCompilationOutput, EfestoCompilationContext> {
 
     @Override
@@ -62,5 +64,10 @@ public class StubCompilerService implements KieCompilerService<EfestoCompilation
             executor = ExecutorB.class;
         }
         return new StubCallableOutput(fri, executor.getCanonicalName());
+    }
+
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
     }
 }
