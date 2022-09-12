@@ -15,12 +15,12 @@
  */
 package stub.module.runtime.model;
 
-import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
 
 public class StubInput extends AbstractEfestoInput<String> {
 
-    public StubInput(FRI fri, String inputData) {
-        super(fri, inputData);
+    public StubInput(ModelLocalUriId modelLocalUriId, String inputData) {
+        super(modelLocalUriId, inputData);
     }
 }

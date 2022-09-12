@@ -1,0 +1,24 @@
+[
+  {
+    "step-type": "executable",
+    "modelLocalUriId": {
+      "model": "stub",
+      "basePath": "/EventA",
+      "fullPath": "/stub/EventA"
+    },
+    "fullClassNames": [
+      "stub.module.api.ExecutorA"
+    ]
+  },
+  {
+    "step-type": "executable",
+    "modelLocalUriId": {
+      "model": "stub",
+      "basePath": "/EventB",
+      "fullPath": "/stub/EventB"
+    },
+    "fullClassNames": [
+      "stub.module.api.ExecutorB"
+    ]
+  }
+]

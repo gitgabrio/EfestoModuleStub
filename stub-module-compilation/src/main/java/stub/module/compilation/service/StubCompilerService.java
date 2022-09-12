@@ -49,6 +49,11 @@ public class StubCompilerService implements KieCompilerService<EfestoCompilation
         return Collections.singletonList(getEfestoCompilationOutput((StubResource) toProcess));
     }
 
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
+    }
+
     private EfestoCompilationOutput getEfestoCompilationOutput(StubResource resource) {
         String content = resource.getContent();
         boolean even = !content.isEmpty() && content.length() % 2 == 0;
@@ -72,8 +77,4 @@ public class StubCompilerService implements KieCompilerService<EfestoCompilation
         return new StubCallableOutput(modelLocalUriId, executor.getCanonicalName());
     }
 
-    @Override
-    public String getModelType() {
-        return MODEL_TYPE;
-    }
 }
