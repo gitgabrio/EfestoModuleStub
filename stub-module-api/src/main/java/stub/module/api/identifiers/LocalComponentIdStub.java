@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2021 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,14 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.runtime.model;
+package stub.module.api.identifiers;
 
+import org.kie.efesto.common.api.identifiers.Id;
+import org.kie.efesto.common.api.identifiers.LocalUri;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
 
-public class StubInput extends AbstractEfestoInput<String> {
+import static stub.module.api.CommonConstants.MODEL_TYPE;
 
-    public StubInput(ModelLocalUriId modelLocalUriId, String inputData) {
-        super(modelLocalUriId, inputData);
+public class LocalComponentIdStub extends ModelLocalUriId implements Id {
+
+    private static final long serialVersionUID = 8621199867598971641L;
+
+
+    public LocalComponentIdStub(String name) {
+        super(LocalUri.Root.append(MODEL_TYPE).append(name));
     }
+
 }

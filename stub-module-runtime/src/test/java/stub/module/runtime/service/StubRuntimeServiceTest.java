@@ -19,9 +19,10 @@ import java.util.Collection;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import org.kie.efesto.common.api.io.IndexFile;
-import org.kie.efesto.common.api.model.FRI;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.kie.efesto.common.api.identifiers.LocalUri;
+import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.model.EfestoInput;
 import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
 import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
@@ -35,6 +36,8 @@ import stub.module.runtime.model.StubInput;
 import stub.module.runtime.model.StubOutput;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.kie.efesto.common.api.identifiers.LocalUri.SLASH;
+import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 class StubRuntimeServiceTest {
 
@@ -50,55 +53,42 @@ class StubRuntimeServiceTest {
                                                                                                           " RuntimeManager"));
     }
 
-    @Test
-    void canManageInput() {
-        FRI fri = new FRI("stub", "EventA");
+    @ParameterizedTest
+    @CsvSource({
+            "EventA, true",
+            "EventB, true",
+            "EventC, false",
+    })
+    void canManageInput(String event, boolean manageable) {
+        ModelLocalUriId fri = getModelUri(event);
         EfestoInput efestoInput = new StubInput(fri, "Content");
-        assertThat(kieRuntimeService.canManageInput(efestoInput, context)).isTrue();
-        fri = new FRI("stub", "EventB");
-        efestoInput = new StubInput(fri, "Content");
-        assertThat(kieRuntimeService.canManageInput(efestoInput, context)).isTrue();
-        fri = new FRI("stub", "EventC");
-        efestoInput = new StubInput(fri, "Content");
-        assertThat(kieRuntimeService.canManageInput(efestoInput, context)).isFalse();
+        assertThat(kieRuntimeService.canManageInput(efestoInput, context)).isEqualTo(manageable);
     }
 
-    @Test
-    void evaluateInput() {
-        String event = "EventA";
-        String content = "ContentA";
-        FRI fri = new FRI("stub", event);
-        EfestoInput efestoInput = new StubInput(fri, content);
+    @ParameterizedTest
+    @CsvSource({
+            "EventA, ContentA, true",
+            "EventB, ContentB, false"
+    })
+    void evaluateInput(String event, String content, boolean even) {
+        ModelLocalUriId modelLocalUriId = getModelUri(event);
+        EfestoInput efestoInput = new StubInput(modelLocalUriId, content);
         Optional<StubOutput> retrieved = kieRuntimeService.evaluateInput(efestoInput, context);
         assertThat(retrieved).isPresent();
         StubOutput output = retrieved.get();
-        commonEvaluateStubOutput(output, content, true);
-
-        event = "EventB";
-        content = "ContentB";
-        fri = new FRI("stub", event);
-        efestoInput = new StubInput(fri, content);
-        retrieved = kieRuntimeService.evaluateInput(efestoInput, context);
-        assertThat(retrieved).isPresent();
-        output = retrieved.get();
-        commonEvaluateStubOutput(output, content, false);
+        commonEvaluateStubOutput(output, content, even);
     }
 
-    @Test
-    void roundTrip() {
-        String event = "EventA";
-        String content = "ContentA";
-        FRI fri = new FRI("stub", event);
-        EfestoInput efestoInput = new StubInput(fri, content);
+    @ParameterizedTest
+    @CsvSource({
+            "EventA, ContentA, true",
+            "EventB, ContentB, false"
+    })
+    void roundTrip(String event, String content, boolean even) {
+        ModelLocalUriId modelLocalUriId = getModelUri(event);
+        EfestoInput efestoInput = new StubInput(modelLocalUriId, content);
         Collection<EfestoOutput> retrieved = runtimeManager.evaluateInput(context, efestoInput);
-        commonValidateEfestoOutputs(retrieved, content, true);
-
-        event = "EventB";
-        content = "ContentB";
-        fri = new FRI("stub", event);
-        efestoInput = new StubInput(fri, content);
-        retrieved = runtimeManager.evaluateInput(context, efestoInput);
-        commonValidateEfestoOutputs(retrieved, content, false);
+        commonValidateEfestoOutputs(retrieved, content, even);
     }
 
     private void commonEvaluateStubOutput(StubOutput toEvaluate, String content, boolean even) {
@@ -116,11 +106,13 @@ class StubRuntimeServiceTest {
 
         EfestoOutput efestoOutput = toValidate.iterator().next();
         assertThat(efestoOutput).isInstanceOf(StubOutput.class);
-        StubOutput stubOutput = (StubOutput)efestoOutput;
+        StubOutput stubOutput = (StubOutput) efestoOutput;
         commonEvaluateStubOutput(stubOutput, content, even);
-
     }
 
-
-
+    private ModelLocalUriId getModelUri(String event) {
+        String path = SLASH + MODEL_TYPE + SLASH + event;
+        LocalUri parsed = LocalUri.parse(path);
+        return new ModelLocalUriId(parsed);
+    }
 }

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.runtime.model;
+package stub.module.api.identifiers;
 
-import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.common.api.identifiers.ComponentRoot;
 
-public class StubInput extends AbstractEfestoInput<String> {
+public class StubIdFactory implements ComponentRoot {
 
-    public StubInput(ModelLocalUriId modelLocalUriId, String inputData) {
-        super(modelLocalUriId, inputData);
+    public LocalComponentIdStub get(String name) {
+        return new LocalComponentIdStub(name);
     }
 }

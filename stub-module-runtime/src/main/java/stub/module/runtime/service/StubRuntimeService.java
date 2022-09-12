@@ -30,6 +30,7 @@ import stub.module.runtime.model.StubOutput;
 
 import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
 import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.isPresentExecutableOrRedirect;
+import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 public class StubRuntimeService implements KieRuntimeService<String, String, StubInput, StubOutput,
         EfestoRuntimeContext> {
@@ -38,8 +39,8 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
 
     @Override
     public boolean canManageInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
-        return toEvaluate instanceof StubInput && isPresentExecutableOrRedirect(toEvaluate.getFRI(),
-                                                                                toEvaluate.getFRI().getModel());
+        return toEvaluate instanceof StubInput && isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(),
+                                                                                context);
     }
 
     @Override
@@ -50,11 +51,16 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
         return getStubOutput(toEvaluate, context);
     }
 
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
+    }
+
     private Optional<StubOutput> getStubOutput(StubInput stubInput, EfestoRuntimeContext context) {
         try {
             StubExecutor stubExecutor = loadStubExecutor(stubInput, context);
             String result = stubExecutor.execute(stubInput.getInputData());
-            return Optional.of(new StubOutput(stubInput.getFRI(), result));
+            return Optional.of(new StubOutput(stubInput.getModelLocalUriId(), result));
         } catch (Exception e) {
             logger.error("Failed to get result due to " + e.getMessage(), e);
             return Optional.empty();
@@ -62,10 +68,13 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
     }
 
     private StubExecutor loadStubExecutor(StubInput stubInput, EfestoRuntimeContext context) {
-        GeneratedExecutableResource executableResource = getGeneratedExecutableResource(stubInput.getFRI(),
-                                                                                        stubInput.getFRI().getModel())
-                .orElseThrow(() -> new KieRuntimeServiceException("Failed to load GeneratedExecutableResource for " + stubInput.getFRI()));
-        StubExecutor stubExecutor;
+        Optional<GeneratedExecutableResource> generatedExecutableResource =
+                getGeneratedExecutableResource(stubInput.getModelLocalUriId(),
+                                               context.getGeneratedResourcesMap());
+        if (generatedExecutableResource.isEmpty()) {
+            throw new KieRuntimeServiceException("Failed to load GeneratedExecutableResource for " + stubInput.getModelLocalUriId());
+        }
+        GeneratedExecutableResource executableResource = generatedExecutableResource.get();
         try {
             String stubExecutorClassName = executableResource.getFullClassNames().get(0);
             final Class<? extends StubExecutor> aClass =

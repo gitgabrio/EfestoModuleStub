@@ -15,14 +15,13 @@
  */
 package stub.module.compilation.model;
 
-import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.compilationmanager.api.model.AbstractEfestoCallableCompilationOutput;
 
 public class StubCallableOutput extends AbstractEfestoCallableCompilationOutput {
 
-    public StubCallableOutput(FRI fri, String fullClassName) {
-        super(fri, fullClassName);
+    public StubCallableOutput(ModelLocalUriId modelLocalUriId, String fullClassName) {
+        super(modelLocalUriId, fullClassName);
     }
-
 }
 
