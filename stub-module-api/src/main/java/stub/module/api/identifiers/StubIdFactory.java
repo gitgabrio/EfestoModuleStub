@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.compilation.model;
+package stub.module.api.identifiers;
 
-import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.compilationmanager.api.model.AbstractEfestoCallableCompilationOutput;
+import org.kie.efesto.common.api.identifiers.ComponentRoot;
 
-public class StubCallableOutput extends AbstractEfestoCallableCompilationOutput {
+public class StubIdFactory implements ComponentRoot {
 
-    public StubCallableOutput(ModelLocalUriId modelLocalUriId, String fullClassName) {
-        super(modelLocalUriId, fullClassName);
+    public LocalComponentIdStub get(String name) {
+        return new LocalComponentIdStub(name);
     }
 }
-

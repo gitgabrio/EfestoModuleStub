@@ -31,6 +31,8 @@ import stub.module.runtime.model.StubOutput;
 import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
 import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.isPresentExecutableOrRedirect;
 
+import static stub.module.api.CommonConstants.MODEL_TYPE;
+
 public class StubRuntimeService implements KieRuntimeService<String, String, StubInput, StubOutput,
         EfestoRuntimeContext> {
 
@@ -59,7 +61,11 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
             logger.error("Failed to get result due to " + e.getMessage(), e);
             return Optional.empty();
         }
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
     }
+}
 
     private StubExecutor loadStubExecutor(StubInput stubInput, EfestoRuntimeContext context) {
         GeneratedExecutableResource executableResource = getGeneratedExecutableResource(stubInput.getFRI(),

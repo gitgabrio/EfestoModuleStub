@@ -18,7 +18,7 @@ package stub.module.compilation.service;
 import java.util.Collections;
 import java.util.List;
 
-import org.kie.efesto.common.api.model.FRI;
+import org.kie.efesto.common.api.identifiers.ReflectiveAppRoot;
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
@@ -27,8 +27,12 @@ import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import stub.module.api.ExecutorA;
 import stub.module.api.ExecutorB;
 import stub.module.api.StubExecutor;
+import stub.module.api.identifiers.LocalComponentIdStub;
+import stub.module.api.identifiers.StubIdFactory;
 import stub.module.compilation.model.StubCallableOutput;
 import stub.module.compilation.model.StubResource;
+
+import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 public class StubCompilerService implements KieCompilerService<EfestoCompilationOutput, EfestoCompilationContext> {
 
@@ -52,15 +56,24 @@ public class StubCompilerService implements KieCompilerService<EfestoCompilation
     }
 
     private StubCallableOutput getStubCallableOutput(boolean even) {
-        FRI fri;
+        LocalComponentIdStub modelLocalUriId;
         Class<? extends StubExecutor> executor;
         if (even) {
-            fri = new FRI("stub", "EventA");
+            modelLocalUriId = new ReflectiveAppRoot("")
+                    .get(StubIdFactory.class)
+                    .get("EventA");
             executor = ExecutorA.class;
         } else {
-            fri = new FRI("stub", "EventB");
+            modelLocalUriId = new ReflectiveAppRoot("")
+                    .get(StubIdFactory.class)
+                    .get("EventB");
             executor = ExecutorB.class;
         }
-        return new StubCallableOutput(fri, executor.getCanonicalName());
+        return new StubCallableOutput(modelLocalUriId, executor.getCanonicalName());
+    }
+
+    @Override
+    public String getModelType() {
+        return MODEL_TYPE;
     }
 }

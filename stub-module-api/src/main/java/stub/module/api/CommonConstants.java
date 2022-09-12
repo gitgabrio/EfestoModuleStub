@@ -13,15 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.compilation.model;
+package stub.module.api;
 
-import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.compilationmanager.api.model.AbstractEfestoCallableCompilationOutput;
+public class CommonConstants {
 
-public class StubCallableOutput extends AbstractEfestoCallableCompilationOutput {
+    public static final String MODEL_TYPE = "stub";
 
-    public StubCallableOutput(ModelLocalUriId modelLocalUriId, String fullClassName) {
-        super(modelLocalUriId, fullClassName);
+    private CommonConstants() {
     }
 }
-
