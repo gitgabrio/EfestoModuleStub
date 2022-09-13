@@ -141,6 +141,7 @@
     <module>stub-module-api</module>
     <module>stub-module-compilation</module>
     <module>stub-module-runtime</module>
+    <module>stub-module-tests</module>
   </modules>
 
 

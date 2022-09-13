@@ -1,1 +1,2 @@
 stub.module.compilation.service.StubCompilerService
+stub.module.compilation.service.JDrlCompilerService

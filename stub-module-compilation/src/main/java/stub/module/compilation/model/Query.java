@@ -13,12 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.api;
+package stub.module.compilation.model;
 
-public class CommonConstants {
+public class Query {
 
-    public static final String MODEL_TYPE = "jdrl";
+    private String name;
 
-    private CommonConstants() {
+    private String query;
+
+    public Query(String name, String query) {
+        this.name = name;
+        this.query = query;
+    }
+
+    public Query() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    @Override
+    public String toString() {
+        return "Query{" +
+                "name='" + name + '\'' +
+                ", query='" + query + '\'' +
+                '}';
     }
 }

@@ -13,12 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.api;
+package stub.module.compilation.model;
 
-public class CommonConstants {
+public class Global {
 
-    public static final String MODEL_TYPE = "jdrl";
+    private String name;
 
-    private CommonConstants() {
+    private String type;
+
+    public Global(String name, String type) {
+        this.name = name;
+        this.type = type;
+    }
+
+    public Global() {
+
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    @Override
+    public String toString() {
+        return "Global{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

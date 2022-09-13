@@ -2,9 +2,9 @@
   {
     "step-type": "executable",
     "modelLocalUriId": {
-      "model": "stub",
+      "model": "jdrl",
       "basePath": "/EventA",
-      "fullPath": "/stub/EventA"
+      "fullPath": "/jdrl/EventA"
     },
     "fullClassNames": [
       "stub.module.api.ExecutorA"
@@ -13,9 +13,9 @@
   {
     "step-type": "executable",
     "modelLocalUriId": {
-      "model": "stub",
+      "model": "jdrl",
       "basePath": "/EventB",
-      "fullPath": "/stub/EventB"
+      "fullPath": "/jdrl/EventB"
     },
     "fullClassNames": [
       "stub.module.api.ExecutorB"

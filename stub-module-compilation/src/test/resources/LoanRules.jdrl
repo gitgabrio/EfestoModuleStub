@@ -1,0 +1,44 @@
+{
+  "packageName": "org.drools.example",
+  "imports": [
+    "org.drools.example.LoanApplication"
+  ],
+  "globals" : [
+    {
+      "type": "Integer",
+      "name": "maxAmount"
+    },
+    {
+      "type": "java.util.List",
+      "name": "approvedApplications"
+    }
+  ],
+  "rules": [
+    {
+      "name": "SmallDepositApprove",
+      "when": "$l: LoanApplication( applicant.age >= 20, deposit < 1000, amount <= 2000 )",
+      "then": "modify($l) { setApproved(true) };"
+    },
+    {
+      "name": "SmallDepositReject",
+      "when": "$l: LoanApplication( applicant.age >= 20, deposit < 1000, amount > 2000 )",
+      "then": "modify($l) { setApproved(false) };"
+    },
+    {
+      "name": "LargeDepositApprove",
+      "when": "$l: LoanApplication( applicant.age >= 20, deposit >= 1000, amount <= maxAmount )",
+      "then": "modify($l) { setApproved(true) };"
+    },
+    {
+      "name": "LargeDepositReject",
+      "when": "$l: LoanApplication( applicant.age >= 20, deposit >= 1000, amount > maxAmount )",
+      "then": "modify($l) { setApproved(false) };"
+    },
+    {
+      "name": "NotAdultApplication",
+      "when": "$l: LoanApplication( applicant.age < 20 )",
+      "then": "modify($l) { setApproved(false) };"
+    }
+  ]
+}
+
