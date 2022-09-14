@@ -142,6 +142,7 @@
     <module>stub-module-compilation</module>
     <module>stub-module-runtime</module>
     <module>stub-module-tests</module>
+    <module>kafka-efesto</module>
   </modules>
 
 
