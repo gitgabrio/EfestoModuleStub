@@ -1,0 +1,76 @@
+{
+  "packageName": "org.drools.example",
+  "declaredTypes": [
+    {
+      "name": "Applicant",
+      "fields": [
+        {
+          "name": "value",
+          "type": "String"
+        },
+        {
+          "name": "age",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "LoanApplication",
+      "fields": [
+        {
+          "name": "id",
+          "type": "String"
+        },
+        {
+          "name": "applicant",
+          "type": "Applicant"
+        },
+        {
+          "name": "amount",
+          "type": "int"
+        },
+        {
+          "name": "deposit",
+          "type": "int"
+        },
+        {
+          "name": "approved",
+          "type": "boolean"
+        }
+      ]
+    }
+  ],
+  "globals": [
+    {
+      "type": "Integer",
+      "name": "maxAmount"
+    }
+  ],
+  "rules": [
+    {
+      "name": "SmallDepositApprove",
+      "when": "$l: LoanApplication(applicant.age >= 20 && deposit < 1000 && amount <= 2000)",
+      "then": "modify($l) { setApproved(true) };"
+    },
+    {
+      "name": "SmallDepositReject",
+      "when": "$l: LoanApplication(applicant.age >= 20 && deposit < 1000 && amount > 2000)",
+      "then": "modify($l) { setApproved(false) };"
+    },
+    {
+      "name": "LargeDepositApprove",
+      "when": "$l: LoanApplication(applicant.age >= 20 && deposit >= 1000 && amount <= maxAmount)",
+      "then": "modify($l) { setApproved(true) };"
+    },
+    {
+      "name": "LargeDepositReject",
+      "when": "$l: LoanApplication(applicant.age >= 20 && deposit >= 1000 && amount > maxAmount)",
+      "then": "modify($l) { setApproved(false) };"
+    },
+    {
+      "name": "NotAdultApplication",
+      "when": "$l: LoanApplication(applicant.age < 20)",
+      "then": "modify($l) { setApproved(false) };"
+    }
+  ]
+}

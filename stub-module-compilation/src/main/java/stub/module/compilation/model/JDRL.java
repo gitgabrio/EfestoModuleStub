@@ -25,6 +25,8 @@ public class JDRL {
 
     private List<Global> globals;
 
+    private List<DeclaredType> declaredTypes;
+
     private List<Rule> rules;
 
     private List<Query> queries;
@@ -32,10 +34,11 @@ public class JDRL {
     public JDRL() {
     }
 
-    public JDRL(String packageName, List<String> imports, List<Global> globals, List<Rule> rules, List<Query> queries) {
+    public JDRL(String packageName, List<String> imports, List<Global> globals, List<DeclaredType> declaredTypes, List<Rule> rules, List<Query> queries) {
         this.packageName = packageName;
         this.imports = imports;
         this.globals = globals;
+        this.declaredTypes = declaredTypes;
         this.rules = rules;
         this.queries = queries;
     }
@@ -51,6 +54,10 @@ public class JDRL {
 
     public List<Global> getGlobals() {
         return globals;
+    }
+
+    public List<DeclaredType> getDeclaredTypes() {
+        return declaredTypes;
     }
 
     public List<Rule> getRules() {

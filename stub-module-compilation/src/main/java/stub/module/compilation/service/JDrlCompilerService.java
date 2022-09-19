@@ -34,12 +34,13 @@ import org.kie.api.io.Resource;
 import org.kie.efesto.common.api.identifiers.ReflectiveAppRoot;
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
+import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContextImpl;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
-import stub.module.api.identifiers.LocalComponentIdStub;
-import stub.module.api.identifiers.StubIdFactory;
+import stub.module.api.identifiers.JdrlIdFactory;
+import stub.module.api.identifiers.LocalComponentIdJdrl;
 import stub.module.compilation.model.EfestoRedirectOutputJDrl;
 import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.JDrlCompilationContext;
@@ -61,7 +62,7 @@ public class JDrlCompilerService implements KieCompilerService<EfestoCompilation
             throw new KieCompilerServiceException("Unexpected EfestoResource " + toProcess.getClass());
         }
         if (!(context instanceof JDrlCompilationContext)) {
-            throw new KieCompilerServiceException("context has to be JDrlCompilationContext");
+            context = JDrlCompilationContext.buildWithEfestoCompilationContext((EfestoCompilationContextImpl) context);
         }
         return Collections.singletonList(getEfestoCompilationOutput((EfestoInputStreamResource) toProcess,
                                                                     (JDrlCompilationContext) context));
@@ -76,19 +77,19 @@ public class JDrlCompilerService implements KieCompilerService<EfestoCompilation
                                                                JDrlCompilationContext context) {
         String content = new BufferedReader(new InputStreamReader(resource.getContent()))
                 .lines().collect(Collectors.joining("\n"));
-        return getEfestoRedirectOutputJDrl(content, context);
+        return getEfestoRedirectOutputJDrl(resource.getFileName(), content, context);
     }
 
-    static EfestoRedirectOutputJDrl getEfestoRedirectOutputJDrl(String content, JDrlCompilationContext context) {
+    static EfestoRedirectOutputJDrl getEfestoRedirectOutputJDrl(String fileName, String content, JDrlCompilationContext context) {
         try {
             JDRL jdrl = getJDRLObject(content);
-            return getEfestoRedirectOutputJDrl(jdrl, context);
+            return getEfestoRedirectOutputJDrl(fileName, jdrl, context);
         } catch (JsonProcessingException e) {
             throw new KieCompilerServiceException(e);
         }
     }
 
-    static EfestoRedirectOutputJDrl getEfestoRedirectOutputJDrl(JDRL jdrl, JDrlCompilationContext context) {
+    static EfestoRedirectOutputJDrl getEfestoRedirectOutputJDrl(String fileName, JDRL jdrl, JDrlCompilationContext context) {
         String drlString = getDrlString(jdrl);
 
         KnowledgeBuilderConfigurationImpl conf =
@@ -96,9 +97,10 @@ public class JDrlCompilerService implements KieCompilerService<EfestoCompilation
         DrlResourceHandler drlResourceHandler = new DrlResourceHandler(conf);
         Resource resource = new ByteArrayResource(drlString.getBytes(StandardCharsets.UTF_8));
         PackageDescr packageDescr = resourceToPackageDescr(drlResourceHandler, resource);
-        LocalComponentIdStub modelLocalUriId = new ReflectiveAppRoot("")
-                .get(StubIdFactory.class)
-                .get(UUID.randomUUID().toString());
+        String cleanedFileName = fileName.contains(".") ? fileName.substring(0, fileName.indexOf('.')) : fileName;
+        LocalComponentIdJdrl modelLocalUriId = new ReflectiveAppRoot("")
+                .get(JdrlIdFactory.class)
+                .get(cleanedFileName);
         return new EfestoRedirectOutputJDrl(modelLocalUriId, packageDescr);
     }
 

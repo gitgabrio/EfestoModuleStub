@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,34 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package drools.ruleunit.example;
+package stub.module.compilation.model;
 
-public class Applicant {
+import java.util.List;
+
+public class DeclaredType {
 
     private String name;
-    private int age;
 
-    public Applicant() {
+    private List<DeclaredTypeField> fields;
+
+    public DeclaredType(String name, List<DeclaredTypeField> fields) {
+        this.name = name;
+        this.fields = fields;
     }
 
-    public Applicant(String name, int age) {
-        this.name = name;
-        this.age = age;
+    public DeclaredType() {
+
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public List<DeclaredTypeField> getFields() {
+        return fields;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    @Override
+    public String toString() {
+        return "DeclaredTypeField{" +
+                "name='" + name + '\'' +
+                ", fields='" + fields + '\'' +
+                '}';
     }
 }

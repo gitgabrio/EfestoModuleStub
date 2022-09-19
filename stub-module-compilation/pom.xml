@@ -18,6 +18,11 @@
         <artifactId>drools-compiler</artifactId>
         <version>${drools.version}</version>
       </dependency>
+      <dependency>
+        <groupId>org.kie</groupId>
+        <artifactId>kie-drl-compilation-common</artifactId>
+        <version>${drools.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -39,6 +44,11 @@
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>efesto-compilation-manager-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drl-compilation-common</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

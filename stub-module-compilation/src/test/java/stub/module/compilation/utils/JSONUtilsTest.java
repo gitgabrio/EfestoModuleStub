@@ -26,6 +26,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import stub.module.compilation.model.DeclaredType;
+import stub.module.compilation.model.DeclaredTypeField;
 import stub.module.compilation.model.Global;
 import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.Rule;
@@ -35,7 +37,7 @@ import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
 
 class JSONUtilsTest {
 
-    private static final String fileName = "LoanRules.jdrl";
+    private static final String fileName = "org/drools/example/LoanRules.jdrl";
     private static File jdrlFile;
 
     @BeforeAll
@@ -61,6 +63,30 @@ class JSONUtilsTest {
                 "      \"name\": \"maxAmount\"\n" +
                 "    }";
         Global retrieved = JSONUtils.getGlobalObject(global);
+        assertThat(retrieved).isNotNull();
+    }
+
+    @Test
+    void getDeclaredType() throws JsonProcessingException {
+        String declaredTypeString = "{\n" +
+                "      \"name\": \"MyDouble\",\n" +
+                "      \"fields\": [\n" +
+                "        {\n" +
+                "          \"name\": \"value\",\n" +
+                "          \"type\": \"double\"\n" +
+                "        }\n" +
+                "      ]\n" +
+                "    }";
+        DeclaredType retrieved = JSONUtils.getDeclaredType(declaredTypeString);
+        assertThat(retrieved).isNotNull();
+    }
+
+    @Test
+    void getDeclaredTypeField() throws JsonProcessingException {
+        String declaredTypeField = "    {\n" +
+                "      \"name\": \"MyInt\"\n" +
+                "    },";
+        DeclaredTypeField retrieved = JSONUtils.getDeclaredTypeField(declaredTypeField);
         assertThat(retrieved).isNotNull();
     }
 

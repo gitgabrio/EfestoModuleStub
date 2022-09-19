@@ -19,11 +19,14 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.drools.drl.ast.descr.PackageDescr;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.kie.efesto.common.api.model.GeneratedClassResource;
+import org.kie.efesto.common.api.model.GeneratedResources;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
@@ -47,13 +50,13 @@ class JDrlCompilerServiceTest {
     private static KieCompilerService kieCompilerService;
 
     private static final Logger logger = LoggerFactory.getLogger(StubCompilerServiceTest.class);
-    private static final String fileName = "LoanRules.jdrl";
+    private static final String fileName = "LoanRulesNoRuleUnit.jdrl";
     private static File jdrlFile;
 
     @BeforeAll
     static void setUp() {
+        compilationManager = SPIUtils.getCompilationManager(false).orElseThrow(() -> new RuntimeException("Failed to find CompilationManager"));
         kieCompilerService = new JDrlCompilerService();
-        compilationManager = SPIUtils.getCompilationManager(false).orElseThrow(() -> new RuntimeException("Failed to retrieve CompilationManager"));
         jdrlFile = getFileFromFileName(fileName).orElseThrow(() -> new RuntimeException("Failed to get jdrlFile"));
     }
 
@@ -81,6 +84,24 @@ class JDrlCompilerServiceTest {
     }
 
     @Test
+    void processCompleteResource() throws IOException {
+        EfestoResource efestoResource = new EfestoInputStreamResource(Files.newInputStream(jdrlFile.toPath()),
+                                                                      fileName);
+        JDrlCompilationContext compilationContext = JDrlCompilationContext
+                .buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
+        compilationManager.processResource(compilationContext, efestoResource);
+        Map<String, GeneratedResources> generatedResourcesMap = compilationContext.getGeneratedResourcesMap();
+        assertThat(generatedResourcesMap).isNotNull();
+        assertThat(generatedResourcesMap.get("drl")).isNotNull();
+        GeneratedResources generatedResources = generatedResourcesMap.get("drl");
+        assertThat(generatedResources.stream().anyMatch(generatedResource -> generatedResource instanceof GeneratedClassResource &&
+                ((GeneratedClassResource) generatedResource).getFullClassName().equals("org.drools.example.Applicant"))).isTrue();
+        assertThat(generatedResources.stream().anyMatch(generatedResource -> generatedResource instanceof GeneratedClassResource &&
+                ((GeneratedClassResource) generatedResource).getFullClassName().equals("org.drools.example" +
+                                                                                               ".LoanApplication"))).isTrue();
+    }
+
+    @Test
     void getModelType() {
         assertThat(kieCompilerService.getModelType()).isEqualTo(MODEL_TYPE);
     }
@@ -90,7 +111,8 @@ class JDrlCompilerServiceTest {
         JDRL jdrl = JSONUtils.getJDRLObject(jdrlFile);
         JDrlCompilationContext compilationContext = JDrlCompilationContext
                 .buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
-        EfestoRedirectOutputJDrl retrieved = JDrlCompilerService.getEfestoRedirectOutputJDrl(jdrl, compilationContext);
+        EfestoRedirectOutputJDrl retrieved = JDrlCompilerService.getEfestoRedirectOutputJDrl(fileName, jdrl,
+                                                                                             compilationContext);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getContent()).isNotNull();
         Set<PackageDescr> packageDescrs = retrieved.getContent();
