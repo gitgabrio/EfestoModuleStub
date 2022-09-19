@@ -1,0 +1,14 @@
+{
+  "modelLocalUriIdString": "{\"model\":\"drl\",\"basePath\":\"/LoanRules\",\"fullPath\":\"/drl/LoanRules\"}\"}",
+  "inputData": {
+    "loanApplicationId": "ABC10001",
+    "loanApplicationAmount": 2000,
+    "loanApplicationDeposit": 1000,
+    "applicantName": "John",
+    "applicantAge": 45,
+    "globals" : {
+      "maxAmount": 5000
+    },
+    "package": "org.drools.example"
+  }
+}

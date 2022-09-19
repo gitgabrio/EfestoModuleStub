@@ -27,9 +27,7 @@ import org.junit.jupiter.api.Test;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
-import org.kie.efesto.compilationmanager.api.service.CompilationManager;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
-import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.compilation.model.EfestoRedirectOutputJDrl;
@@ -43,18 +41,17 @@ import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 class JDrlCompilerServiceTest {
 
-    private static CompilationManager compilationManager;
     private static KieCompilerService kieCompilerService;
 
     private static final Logger logger = LoggerFactory.getLogger(StubCompilerServiceTest.class);
     private static final String fileName = "LoanRules.jdrl";
+    private static final String fullFilePath = "org/drools/example/" + fileName;
     private static File jdrlFile;
 
     @BeforeAll
     static void setUp() {
         kieCompilerService = new JDrlCompilerService();
-        compilationManager = SPIUtils.getCompilationManager(false).orElseThrow(() -> new RuntimeException("Failed to retrieve CompilationManager"));
-        jdrlFile = getFileFromFileName(fileName).orElseThrow(() -> new RuntimeException("Failed to get jdrlFile"));
+        jdrlFile = getFileFromFileName(fullFilePath).orElseThrow(() -> new RuntimeException("Failed to get jdrlFile"));
     }
 
     @Test
@@ -90,7 +87,7 @@ class JDrlCompilerServiceTest {
         JDRL jdrl = JSONUtils.getJDRLObject(jdrlFile);
         JDrlCompilationContext compilationContext = JDrlCompilationContext
                 .buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
-        EfestoRedirectOutputJDrl retrieved = JDrlCompilerService.getEfestoRedirectOutputJDrl(jdrl, compilationContext);
+        EfestoRedirectOutputJDrl retrieved = JDrlCompilerService.getEfestoRedirectOutputJDrl(fileName, jdrl, compilationContext);
         assertThat(retrieved).isNotNull();
         assertThat(retrieved.getContent()).isNotNull();
         Set<PackageDescr> packageDescrs = retrieved.getContent();

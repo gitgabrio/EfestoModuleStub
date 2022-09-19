@@ -15,6 +15,8 @@
  */
 package stub.module.compilation.utils;
 
+import stub.module.compilation.model.DeclaredType;
+import stub.module.compilation.model.DeclaredTypeField;
 import stub.module.compilation.model.Global;
 import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.Rule;
@@ -24,8 +26,8 @@ public class JDRLUtils {
     public static String getDrlString(JDRL jdrl) {
         StringBuilder builder = new StringBuilder();
         builder.append(getPackage(jdrl)).append("\r\n");
-        builder.append(getImports(jdrl)).append("\r\n");
         builder.append(getGlobals(jdrl)).append("\r\n");
+        builder.append(getDeclaredTypes(jdrl)).append("\r\n");
         builder.append(getRules(jdrl)).append("\r\n");
         return builder.toString();
     }
@@ -35,20 +37,11 @@ public class JDRLUtils {
         return addSemiColon(toReturn);
     }
 
-    private static String getImports(JDRL jdrl) {
-        StringBuilder builder = new StringBuilder();
-        jdrl.getImports().forEach(importString -> builder.append(getImport(importString)).append("\r\n"));
-        return builder.toString();
-    }
-
-    private static String getImport(String importString) {
-        String toReturn = String.format("import %s", importString);
-        return addSemiColon(toReturn);
-    }
-
     private static String getGlobals(JDRL jdrl) {
         StringBuilder builder = new StringBuilder();
-        jdrl.getGlobals().forEach(importString -> builder.append(getGlobal(importString)).append("\r\n"));
+        if (jdrl.getGlobals() != null) {
+            jdrl.getGlobals().forEach(globalString -> builder.append(getGlobal(globalString)).append("\r\n"));
+        }
         return builder.toString();
     }
 
@@ -57,9 +50,32 @@ public class JDRLUtils {
         return addSemiColon(toReturn);
     }
 
+    private static String getDeclaredTypes(JDRL jdrl) {
+        StringBuilder builder = new StringBuilder();
+        if (jdrl.getDeclaredTypes() != null) {
+            jdrl.getDeclaredTypes().forEach(declaredType -> builder.append(getDeclaredType(declaredType)).append("\r\n"));
+        }
+        return builder.toString();
+    }
+
+    private static String getDeclaredType(DeclaredType declaredType) {
+        StringBuilder builder = new StringBuilder(String.format("declare %s\r\n", declaredType.getName()));
+        if (declaredType.getFields() != null) {
+            declaredType.getFields().forEach(declaredTypeField -> builder.append(getDeclaredTypeField(declaredTypeField)).append("\r\n"));
+        }
+        builder.append("end\r\n");
+        return builder.toString();
+    }
+
+    private static String getDeclaredTypeField(DeclaredTypeField declaredType) {
+        return String.format("%s : %s\r\n", declaredType.getName(), declaredType.getType());
+    }
+
     private static String getRules(JDRL jdrl) {
         StringBuilder builder = new StringBuilder();
-        jdrl.getRules().forEach(rule -> builder.append(getRule(rule)).append("\r\n"));
+        if (jdrl.getRules() != null) {
+            jdrl.getRules().forEach(rule -> builder.append(getRule(rule)).append("\r\n"));
+        }
         return builder.toString();
     }
 

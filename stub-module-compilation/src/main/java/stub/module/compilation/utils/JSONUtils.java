@@ -22,6 +22,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import stub.module.compilation.model.DeclaredType;
+import stub.module.compilation.model.DeclaredTypeField;
 import stub.module.compilation.model.Global;
 import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.Query;
@@ -47,6 +49,14 @@ public class JSONUtils {
 
     public static Global getGlobalObject(String globalString) throws JsonProcessingException {
         return objectMapper.readValue(globalString, Global.class);
+    }
+
+    public static DeclaredType getDeclaredType(String declaredTypeString) throws JsonProcessingException {
+        return objectMapper.readValue(declaredTypeString, DeclaredType.class);
+    }
+
+    public static DeclaredTypeField getDeclaredTypeField(String declaredTypeFieldString) throws JsonProcessingException {
+        return objectMapper.readValue(declaredTypeFieldString, DeclaredTypeField.class);
     }
 
     public static JDRL getJDRLObject(String jdrlString) throws JsonProcessingException {

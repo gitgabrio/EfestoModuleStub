@@ -18,27 +18,18 @@ package stub.module.compilation.utils;
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import stub.module.compilation.model.JDRL;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
 
 class JDRLUtilsTest {
 
-    private static final String fileName = "LoanRules.jdrl";
-    private static File jdrlFile;
-
-
-    @BeforeAll
-    static void setUp() {
-        jdrlFile = getFileFromFileName(fileName).orElseThrow(() -> new RuntimeException("Failed to get jdrlFile"));
-
-    }
-
-    @Test
-    void getDrlString() throws IOException {
+    @ParameterizedTest
+    @ValueSource(strings = {"org/drools/example/LoanRules.jdrl", "LoanRulesNoRuleUnit.jdrl"})
+    void getDrlString(String fileName) throws IOException {
+        File jdrlFile = getFileFromFileName(fileName).orElseThrow(() -> new RuntimeException("Failed to get jdrlFile"));
         JDRL jdrl = JSONUtils.getJDRLObject(jdrlFile);
         String retrieved = JDRLUtils.getDrlString(jdrl);
         System.out.println(retrieved);
