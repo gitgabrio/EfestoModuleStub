@@ -1,1 +1,2 @@
 stub.module.runtime.service.StubRuntimeService
+stub.module.runtime.service.JdrlRuntimeService

@@ -27,7 +27,7 @@ import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
 class JDRLUtilsTest {
 
     @ParameterizedTest
-    @ValueSource(strings = {"org/drools/example/LoanRules.jdrl", "LoanRulesNoRuleUnit.jdrl"})
+    @ValueSource(strings = {"LoanRules.jdrl"})
     void getDrlString(String fileName) throws IOException {
         File jdrlFile = getFileFromFileName(fileName).orElseThrow(() -> new RuntimeException("Failed to get jdrlFile"));
         JDRL jdrl = JSONUtils.getJDRLObject(jdrlFile);

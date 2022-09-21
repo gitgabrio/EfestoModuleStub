@@ -45,7 +45,7 @@ public class CompileJDRLTest {
     private static CompilationManager compilationManager;
 
     private static final Logger logger = LoggerFactory.getLogger(CompileJDRLTest.class);
-    private static final String fileName = "org/drools/example/LoanRules.jdrl";
+    private static final String fileName = "LoanRules.jdrl";
     private static File jdrlFile;
 
     @BeforeAll

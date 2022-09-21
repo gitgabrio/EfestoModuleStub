@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2022 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,34 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.drools.example;
+package stub.module.runtime.model;
 
-public class Applicant {
+import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
+import org.kie.efesto.runtimemanager.api.model.BaseEfestoInput;
 
-    private String name;
-    private int age;
+public class JdrlInput extends BaseEfestoInput<String> {
 
-    public Applicant() {
-    }
-
-    public Applicant(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+    public JdrlInput(ModelLocalUriId modelLocalUriId, String inputData) {
+        super(modelLocalUriId, inputData);
     }
 }

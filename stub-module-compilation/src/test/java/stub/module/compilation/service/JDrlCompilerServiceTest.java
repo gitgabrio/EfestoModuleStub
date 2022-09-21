@@ -20,9 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import org.drools.drl.ast.descr.PackageDescr;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.efesto.common.api.model.GeneratedClassResource;
@@ -36,9 +34,7 @@ import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.compilation.model.EfestoRedirectOutputJDrl;
-import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.JDrlCompilationContext;
-import stub.module.compilation.utils.JSONUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
@@ -50,7 +46,7 @@ class JDrlCompilerServiceTest {
     private static KieCompilerService kieCompilerService;
 
     private static final Logger logger = LoggerFactory.getLogger(StubCompilerServiceTest.class);
-    private static final String fileName = "LoanRulesNoRuleUnit.jdrl";
+    private static final String fileName = "LoanRules.jdrl";
     private static File jdrlFile;
 
     @BeforeAll
@@ -104,18 +100,5 @@ class JDrlCompilerServiceTest {
     @Test
     void getModelType() {
         assertThat(kieCompilerService.getModelType()).isEqualTo(MODEL_TYPE);
-    }
-
-    @Test
-    void getEfestoRedirectOutputJDrl() throws IOException {
-        JDRL jdrl = JSONUtils.getJDRLObject(jdrlFile);
-        JDrlCompilationContext compilationContext = JDrlCompilationContext
-                .buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
-        EfestoRedirectOutputJDrl retrieved = JDrlCompilerService.getEfestoRedirectOutputJDrl(fileName, jdrl,
-                                                                                             compilationContext);
-        assertThat(retrieved).isNotNull();
-        assertThat(retrieved.getContent()).isNotNull();
-        Set<PackageDescr> packageDescrs = retrieved.getContent();
-        assertThat(packageDescrs.size()).isEqualTo(1);
     }
 }

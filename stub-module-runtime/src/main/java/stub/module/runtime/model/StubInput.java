@@ -16,9 +16,9 @@
 package stub.module.runtime.model;
 
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.BaseEfestoInput;
 
-public class StubInput extends AbstractEfestoInput<String> {
+public class StubInput extends BaseEfestoInput<String> {
 
     public StubInput(ModelLocalUriId modelLocalUriId, String inputData) {
         super(modelLocalUriId, inputData);

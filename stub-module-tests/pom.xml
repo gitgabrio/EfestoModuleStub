@@ -12,31 +12,9 @@
 
   <artifactId>stub-module-tests</artifactId>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.drools</groupId>
-        <artifactId>drools-ruleunits-api</artifactId>
-        <version>${drools.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.drools</groupId>
-        <artifactId>drools-ruleunits-impl</artifactId>
-        <version>${drools.version}</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+  <packaging>jar</packaging>
 
   <dependencies>
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-ruleunits-api</artifactId>
-    </dependency>
-    <!-- TEST -->
-    <dependency>
-      <groupId>org.drools</groupId>
-      <artifactId>drools-ruleunits-impl</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.kie.efesto</groupId>
       <artifactId>stub-module-compilation</artifactId>
@@ -46,7 +24,6 @@
           <artifactId>slf4j-simple</artifactId>
         </exclusion>
       </exclusions>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
@@ -57,18 +34,6 @@
           <artifactId>slf4j-simple</artifactId>
         </exclusion>
       </exclusions>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>efesto-runtime-manager-core</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-simple</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>
@@ -79,19 +44,55 @@
           <artifactId>slf4j-simple</artifactId>
         </exclusion>
       </exclusions>
-      <scope>test</scope>
     </dependency>
     <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-drl-map-input-runtime</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-simple</artifactId>
-        </exclusion>
-      </exclusions>
-      <scope>test</scope>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-model-compiler</artifactId>
+      <version>${drools.version}</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+<!--      <plugin>-->
+<!--        <groupId>org.kie</groupId>-->
+<!--        <artifactId>kie-maven-plugin</artifactId>-->
+<!--        <version>${drools.version}</version>-->
+<!--        <extensions>true</extensions>-->
+<!--        <configuration>-->
+<!--          <properties>-->
+<!--            <drools.dialect.java.compiler.lnglevel>1.8</drools.dialect.java.compiler.lnglevel>-->
+<!--          </properties>-->
+<!--        </configuration>-->
+<!--      </plugin>-->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <configuration>
+          <writeJunitReport>true</writeJunitReport>
+          <junitPackageName>efesto.stub.module.testingmodule.runtime</junitPackageName>
+          <pomIncludes>
+            <pomInclude>*/pom.xml</pomInclude>
+          </pomIncludes>
+          <projectsDirectory>src/it</projectsDirectory>
+          <debug>true</debug>
+          <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+          <logDirectory>${project.build.directory}/it</logDirectory>
+          <filterProperties>
+            <org.kie.version>${project.version}</org.kie.version>
+          </filterProperties>
+        </configuration>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>install</goal>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 
 </project>

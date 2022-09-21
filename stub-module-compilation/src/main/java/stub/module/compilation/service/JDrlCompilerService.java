@@ -15,23 +15,9 @@
  */
 package stub.module.compilation.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import org.drools.compiler.builder.impl.KnowledgeBuilderConfigurationImpl;
-import org.drools.compiler.builder.impl.resources.DrlResourceHandler;
-import org.drools.drl.ast.descr.PackageDescr;
-import org.drools.drl.parser.DroolsParserException;
-import org.drools.io.ByteArrayResource;
-import org.kie.api.io.Resource;
-import org.kie.efesto.common.api.identifiers.ReflectiveAppRoot;
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContextImpl;
@@ -39,15 +25,10 @@ import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
-import stub.module.api.identifiers.JdrlIdFactory;
-import stub.module.api.identifiers.LocalComponentIdJdrl;
-import stub.module.compilation.model.EfestoRedirectOutputJDrl;
-import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.JDrlCompilationContext;
 
 import static stub.module.api.CommonConstants.MODEL_TYPE;
-import static stub.module.compilation.utils.JDRLUtils.getDrlString;
-import static stub.module.compilation.utils.JSONUtils.getJDRLObject;
+import static stub.module.compilation.utils.TranslatorUtils.resourceToCompilationOutputFunction;
 
 public class JDrlCompilerService implements KieCompilerService<EfestoCompilationOutput, EfestoCompilationContext> {
 
@@ -64,8 +45,8 @@ public class JDrlCompilerService implements KieCompilerService<EfestoCompilation
         if (!(context instanceof JDrlCompilationContext)) {
             context = JDrlCompilationContext.buildWithEfestoCompilationContext((EfestoCompilationContextImpl) context);
         }
-        return Collections.singletonList(getEfestoCompilationOutput((EfestoInputStreamResource) toProcess,
-                                                                    (JDrlCompilationContext) context));
+        return Collections.singletonList(resourceToCompilationOutputFunction.apply((EfestoInputStreamResource) toProcess,
+                                                                                   (JDrlCompilationContext) context));
     }
 
     @Override
@@ -73,42 +54,4 @@ public class JDrlCompilerService implements KieCompilerService<EfestoCompilation
         return MODEL_TYPE;
     }
 
-    EfestoCompilationOutput getEfestoCompilationOutput(EfestoInputStreamResource resource,
-                                                               JDrlCompilationContext context) {
-        String content = new BufferedReader(new InputStreamReader(resource.getContent()))
-                .lines().collect(Collectors.joining("\n"));
-        return getEfestoRedirectOutputJDrl(resource.getFileName(), content, context);
-    }
-
-    static EfestoRedirectOutputJDrl getEfestoRedirectOutputJDrl(String fileName, String content, JDrlCompilationContext context) {
-        try {
-            JDRL jdrl = getJDRLObject(content);
-            return getEfestoRedirectOutputJDrl(fileName, jdrl, context);
-        } catch (JsonProcessingException e) {
-            throw new KieCompilerServiceException(e);
-        }
-    }
-
-    static EfestoRedirectOutputJDrl getEfestoRedirectOutputJDrl(String fileName, JDRL jdrl, JDrlCompilationContext context) {
-        String drlString = getDrlString(jdrl);
-
-        KnowledgeBuilderConfigurationImpl conf =
-                (KnowledgeBuilderConfigurationImpl) context.newKnowledgeBuilderConfiguration();
-        DrlResourceHandler drlResourceHandler = new DrlResourceHandler(conf);
-        Resource resource = new ByteArrayResource(drlString.getBytes(StandardCharsets.UTF_8));
-        PackageDescr packageDescr = resourceToPackageDescr(drlResourceHandler, resource);
-        String cleanedFileName = fileName.contains(".") ? fileName.substring(0, fileName.indexOf('.')) : fileName;
-        LocalComponentIdJdrl modelLocalUriId = new ReflectiveAppRoot("")
-                .get(JdrlIdFactory.class)
-                .get(cleanedFileName);
-        return new EfestoRedirectOutputJDrl(modelLocalUriId, packageDescr);
-    }
-
-    private static PackageDescr resourceToPackageDescr(DrlResourceHandler drlResourceHandler, Resource resource) {
-        try {
-            return drlResourceHandler.process(resource);
-        } catch (DroolsParserException | IOException e) {
-            throw new KieCompilerServiceException(e);
-        }
-    }
 }

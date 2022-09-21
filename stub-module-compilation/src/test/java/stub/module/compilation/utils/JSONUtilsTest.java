@@ -37,7 +37,7 @@ import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
 
 class JSONUtilsTest {
 
-    private static final String fileName = "org/drools/example/LoanRules.jdrl";
+    private static final String fileName = "LoanRules.jdrl";
     private static File jdrlFile;
 
     @BeforeAll

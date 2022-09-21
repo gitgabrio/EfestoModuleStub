@@ -14,17 +14,41 @@
   <dependencies>
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>efesto-runtime-manager-api</artifactId>
+      <artifactId>efesto-compilation-manager-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>efesto-runtime-manager-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drl-kiesession-local-runtime</artifactId>
+      <version>${drools.version}</version>
     </dependency>
     <dependency>
       <groupId>org.kie.efesto</groupId>
       <artifactId>stub-module-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.json</groupId>
+      <artifactId>json</artifactId>
+      <version>20220320</version>
+    </dependency>
     <!-- Test -->
     <!-- needed to have a RuntimeManager instance -->
     <dependency>
       <groupId>org.kie</groupId>
-      <artifactId>efesto-runtime-manager-core</artifactId>
+      <artifactId>efesto-compilation-manager-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drl-compilation-common</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.kie.efesto</groupId>
+      <artifactId>stub-module-compilation</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
