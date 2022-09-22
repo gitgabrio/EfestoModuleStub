@@ -15,8 +15,10 @@
  */
 package stub.module.runtime.service;
 
+import java.util.Collections;
 import java.util.Optional;
 
+import org.kie.efesto.common.api.cache.EfestoClassKey;
 import org.kie.efesto.runtimemanager.api.model.EfestoInput;
 import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
 import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
@@ -24,6 +26,12 @@ import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 public class StubRuntimeService implements KieRuntimeService {
+
+    @Override
+    public EfestoClassKey getEfestoClassKeyIdentifier() {
+        // TODO
+        return null;
+    }
 
     @Override
     public boolean canManageInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
