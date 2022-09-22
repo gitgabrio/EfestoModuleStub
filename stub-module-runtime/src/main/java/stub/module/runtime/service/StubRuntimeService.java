@@ -15,8 +15,10 @@
  */
 package stub.module.runtime.service;
 
+import java.util.Collections;
 import java.util.Optional;
 
+import org.kie.efesto.common.api.cache.EfestoClassKey;
 import org.kie.efesto.common.api.model.GeneratedExecutableResource;
 import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.efesto.runtimemanager.api.model.EfestoInput;
@@ -36,6 +38,12 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
         EfestoRuntimeContext> {
 
     private static final Logger logger = LoggerFactory.getLogger(StubRuntimeService.class.getName());
+
+    @Override
+    public EfestoClassKey getEfestoClassKeyIdentifier() {
+        // TODO
+        return null;
+    }
 
     @Override
     public boolean canManageInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
