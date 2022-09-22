@@ -20,7 +20,7 @@ import org.kie.efesto.runtimemanager.api.model.AbstractEfestoOutput;
 
 public class StubOutput extends AbstractEfestoOutput<String> {
 
-    public StubOutput(ModelLocalUriId modelLocalUriId, String inputData) {
-        super(modelLocalUriId, inputData);
+    public StubOutput(ModelLocalUriId modelLocalUriId, String outputData) {
+        super(modelLocalUriId, outputData);
     }
 }
