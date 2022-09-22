@@ -19,16 +19,14 @@ import org.kie.efesto.common.api.identifiers.Id;
 import org.kie.efesto.common.api.identifiers.LocalUri;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 
-import static stub.module.api.CommonConstants.MODEL_TYPE;
-
-public class LocalComponentIdJdrl extends ModelLocalUriId implements Id {
+public class LocalComponentRedirectIdJdrl extends ModelLocalUriId implements Id {
 
     private static final long serialVersionUID = 8621199867598971641L;
 
     private static final String TARGET_MODEL = "drl";
 
 
-    public LocalComponentIdJdrl(String name) {
+    public LocalComponentRedirectIdJdrl(String name) {
         super(LocalUri.Root.append(TARGET_MODEL).append(name));
     }
 

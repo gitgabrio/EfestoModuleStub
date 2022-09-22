@@ -20,7 +20,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
+import org.drools.drl.ast.descr.PackageDescr;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.kie.efesto.common.api.model.GeneratedClassResource;
@@ -33,6 +36,7 @@ import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import stub.module.compilation.model.EfestoCallableOutputJDrl;
 import stub.module.compilation.model.EfestoRedirectOutputJDrl;
 import stub.module.compilation.model.JDrlCompilationContext;
 
@@ -74,9 +78,16 @@ class JDrlCompilerServiceTest {
         List<EfestoCompilationOutput> retrieved = kieCompilerService.processResource(efestoResource,
                                                                                      compilationContext);
         assertThat(retrieved).isNotNull();
-        assertThat(retrieved.size()).isEqualTo(1);
-        EfestoCompilationOutput efestoCompilationOutput = retrieved.get(0);
-        assertThat(efestoCompilationOutput).isInstanceOf(EfestoRedirectOutputJDrl.class);
+        Optional<EfestoRedirectOutputJDrl> redirect = retrieved.stream().filter(out -> out instanceof EfestoRedirectOutputJDrl)
+                .map(EfestoRedirectOutputJDrl.class::cast)
+                .findFirst();
+        assertThat(redirect).isPresent();
+        EfestoRedirectOutputJDrl efestoRedirectOutputJDrl = redirect.get();
+        assertThat(efestoRedirectOutputJDrl.getContent()).isNotNull();
+        Optional<EfestoCallableOutputJDrl> callable = retrieved.stream().filter(out -> out instanceof EfestoCallableOutputJDrl)
+                .map(EfestoCallableOutputJDrl.class::cast)
+                .findFirst();
+        assertThat(callable).isPresent();
     }
 
     @Test

@@ -19,6 +19,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -35,7 +37,9 @@ import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceExcept
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import stub.module.api.identifiers.JdrlIdFactory;
-import stub.module.api.identifiers.LocalComponentIdJdrl;
+import stub.module.api.identifiers.LocalComponentExecutableIdJdrl;
+import stub.module.api.identifiers.LocalComponentRedirectIdJdrl;
+import stub.module.compilation.model.EfestoCallableOutputJDrl;
 import stub.module.compilation.model.EfestoRedirectOutputJDrl;
 import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.JDrlCompilationContext;
@@ -68,20 +72,27 @@ public class TranslatorUtils {
             };
 
     private static final BiFunction<String, PackageDescr, EfestoRedirectOutputJDrl> packageDescrToRedirectOutputFunction =
-            (fileName, packageDescr) -> {
-                String cleanedFileName = fileName.contains(".") ? fileName.substring(0, fileName.indexOf('.')) :
-                        fileName;
-                LocalComponentIdJdrl modelLocalUriId = new ReflectiveAppRoot("")
+            (cleanedFileName, packageDescr) -> {
+                LocalComponentRedirectIdJdrl modelLocalUriId = new ReflectiveAppRoot("")
                         .get(JdrlIdFactory.class)
-                        .get(cleanedFileName);
+                        .getRedirect(cleanedFileName);
                 return new EfestoRedirectOutputJDrl(modelLocalUriId, packageDescr);
             };
 
-    public static BiFunction<EfestoInputStreamResource, JDrlCompilationContext, EfestoCompilationOutput> resourceToCompilationOutputFunction = (resource, context) -> {
+    public static BiFunction<EfestoInputStreamResource, JDrlCompilationContext, List<EfestoCompilationOutput>> resourceToCompilationOutputFunction = (resource, context) -> {
         String content = new BufferedReader(new InputStreamReader(resource.getContent()))
                 .lines().collect(Collectors.joining("\n"));
         Resource jdrlResource = jdrlContentToResourceFunction.apply(content);
         PackageDescr packageDescr = resourceToPackageDescrFunction.apply(context, jdrlResource);
-        return packageDescrToRedirectOutputFunction.apply(resource.getFileName(), packageDescr);
+        String fileName = resource.getFileName();
+        String cleanedFileName = fileName.contains(".") ? fileName.substring(0, fileName.indexOf('.')) :
+                fileName;
+        List<EfestoCompilationOutput> toReturn = new ArrayList<>();
+        toReturn.add(packageDescrToRedirectOutputFunction.apply(cleanedFileName, packageDescr));
+        LocalComponentExecutableIdJdrl modelLocalUriId = new ReflectiveAppRoot("")
+                .get(JdrlIdFactory.class)
+                .getExecutable(cleanedFileName);
+        toReturn.add(new EfestoCallableOutputJDrl(modelLocalUriId));
+        return toReturn;
     };
 }

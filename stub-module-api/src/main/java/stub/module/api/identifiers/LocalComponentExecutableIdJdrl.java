@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Red Hat, Inc. and/or its affiliates.
+ * Copyright 2021 Red Hat, Inc. and/or its affiliates.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,15 +15,19 @@
  */
 package stub.module.api.identifiers;
 
-import org.kie.efesto.common.api.identifiers.ComponentRoot;
+import org.kie.efesto.common.api.identifiers.Id;
+import org.kie.efesto.common.api.identifiers.LocalUri;
+import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 
-public class JdrlIdFactory implements ComponentRoot {
+import static stub.module.api.CommonConstants.MODEL_TYPE;
 
-    public LocalComponentRedirectIdJdrl getRedirect(String name) {
-        return new LocalComponentRedirectIdJdrl(name);
+public class LocalComponentExecutableIdJdrl extends ModelLocalUriId implements Id {
+
+    private static final long serialVersionUID = 8621199867598971641L;
+
+
+    public LocalComponentExecutableIdJdrl(String name) {
+        super(LocalUri.Root.append(MODEL_TYPE).append(name));
     }
 
-    public LocalComponentExecutableIdJdrl getExecutable(String name) {
-        return new LocalComponentExecutableIdJdrl(name);
-    }
 }

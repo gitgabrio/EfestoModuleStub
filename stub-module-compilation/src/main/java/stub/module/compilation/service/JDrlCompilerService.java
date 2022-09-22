@@ -15,7 +15,6 @@
  */
 package stub.module.compilation.service;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
@@ -45,8 +44,8 @@ public class JDrlCompilerService implements KieCompilerService<EfestoCompilation
         if (!(context instanceof JDrlCompilationContext)) {
             context = JDrlCompilationContext.buildWithEfestoCompilationContext((EfestoCompilationContextImpl) context);
         }
-        return Collections.singletonList(resourceToCompilationOutputFunction.apply((EfestoInputStreamResource) toProcess,
-                                                                                   (JDrlCompilationContext) context));
+        return resourceToCompilationOutputFunction.apply((EfestoInputStreamResource) toProcess,
+                                                         (JDrlCompilationContext) context);
     }
 
     @Override

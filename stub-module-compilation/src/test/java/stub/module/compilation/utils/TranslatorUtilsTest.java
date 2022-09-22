@@ -18,6 +18,8 @@ package stub.module.compilation.utils;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.drools.drl.ast.descr.PackageDescr;
@@ -27,6 +29,7 @@ import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import stub.module.compilation.model.EfestoCallableOutputJDrl;
 import stub.module.compilation.model.EfestoRedirectOutputJDrl;
 import stub.module.compilation.model.JDrlCompilationContext;
 
@@ -52,12 +55,24 @@ class TranslatorUtilsTest {
                 new EfestoInputStreamResource(Files.newInputStream(jdrlFile.toPath()),
                                                                                  fileName);
 
-        EfestoCompilationOutput retrieved = TranslatorUtils.resourceToCompilationOutputFunction.apply(efestoResource,
-                                                                                                      compilationContext);
-        assertThat(retrieved).isNotNull().isInstanceOf(EfestoRedirectOutputJDrl.class);
-        EfestoRedirectOutputJDrl efestoRedirectOutputJDrl = (EfestoRedirectOutputJDrl) retrieved;
+        List<EfestoCompilationOutput> retrieved = TranslatorUtils.resourceToCompilationOutputFunction.apply(efestoResource,
+                                                                                                            compilationContext);
+        assertThat(retrieved).isNotNull();
+        Optional<EfestoRedirectOutputJDrl> redirect = retrieved.stream().filter(out -> out instanceof EfestoRedirectOutputJDrl)
+                .map(EfestoRedirectOutputJDrl.class::cast)
+                .findFirst();
+        assertThat(redirect).isPresent();
+        EfestoRedirectOutputJDrl efestoRedirectOutputJDrl = redirect.get();
         assertThat(efestoRedirectOutputJDrl.getContent()).isNotNull();
         Set<PackageDescr> packageDescrs = efestoRedirectOutputJDrl.getContent();
         assertThat(packageDescrs.size()).isEqualTo(1);
+        assertThat(efestoRedirectOutputJDrl.getModelLocalUriId().model()).isEqualTo("drl");
+        Optional<EfestoCallableOutputJDrl> callable = retrieved.stream().filter(out -> out instanceof EfestoCallableOutputJDrl)
+                .map(EfestoCallableOutputJDrl.class::cast)
+                .findFirst();
+        assertThat(callable).isPresent();
+        EfestoCallableOutputJDrl efestoCallableOutputJDrl = callable.get();
+        assertThat(efestoCallableOutputJDrl.getModelLocalUriId().model()).isEqualTo("jdrl");
+
     }
 }

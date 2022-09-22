@@ -30,6 +30,8 @@ import org.kie.api.definition.type.FactType;
 import org.kie.api.runtime.KieSession;
 import org.kie.drl.engine.runtime.kiesession.local.model.EfestoInputDrlKieSessionLocal;
 import org.kie.drl.engine.runtime.kiesession.local.model.EfestoOutputDrlKieSessionLocal;
+import org.kie.efesto.common.api.identifiers.LocalUri;
+import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
 import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
@@ -39,6 +41,8 @@ import stub.module.runtime.model.JdrlInput;
 import stub.module.runtime.model.StubOutput;
 
 import static org.kie.efesto.common.api.constants.Constants.PACKAGE_CLASS_TEMPLATE;
+import static org.kie.efesto.common.api.identifiers.LocalUri.SLASH;
+import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 public class TranslatorUtils {
 
@@ -109,7 +113,10 @@ public class TranslatorUtils {
 
     static BiFunction<JdrlInput, EfestoRuntimeContext, KieSession> jdrlInputToKieSessionFunction = (jdrlInput,
                                                                                                     runtimeContext) -> {
-        EfestoInputDrlKieSessionLocal toEvaluate = new EfestoInputDrlKieSessionLocal(jdrlInput.getModelLocalUriId(),
+        String path = SLASH + "drl" + jdrlInput.getModelLocalUriId().basePath();
+        LocalUri parsed = LocalUri.parse(path);
+        ModelLocalUriId modelLocalUriId = new ModelLocalUriId(parsed);
+        EfestoInputDrlKieSessionLocal toEvaluate = new EfestoInputDrlKieSessionLocal(modelLocalUriId,
                                                                                      "");
         return efestoInputToKieSessionFunction.apply(toEvaluate, runtimeContext);
     };
