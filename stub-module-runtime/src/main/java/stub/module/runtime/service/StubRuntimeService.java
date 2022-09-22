@@ -41,21 +41,17 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
 
     @Override
     public EfestoClassKey getEfestoClassKeyIdentifier() {
-        // TODO
-        return null;
+        return new EfestoClassKey(StubInput.class, Collections.singletonList(String.class));
     }
+
 
     @Override
     public boolean canManageInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
-        return toEvaluate instanceof StubInput && isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(),
-                                                                                context);
+        return isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(), context);
     }
 
     @Override
     public Optional<StubOutput> evaluateInput(StubInput toEvaluate, EfestoRuntimeContext context) {
-        if (!canManageInput(toEvaluate, context)) {
-            throw new KieRuntimeServiceException("Unexpected parameters  " + toEvaluate.getClass() + "  " + context.getClass());
-        }
         return getStubOutput(toEvaluate, context);
     }
 
