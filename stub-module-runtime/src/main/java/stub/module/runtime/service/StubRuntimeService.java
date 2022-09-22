@@ -15,8 +15,10 @@
  */
 package stub.module.runtime.service;
 
+import java.util.Collections;
 import java.util.Optional;
 
+import org.kie.efesto.common.api.cache.EfestoClassKey;
 import org.kie.efesto.common.api.model.GeneratedExecutableResource;
 import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.efesto.runtimemanager.api.model.EfestoInput;
@@ -38,16 +40,19 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
     private static final Logger logger = LoggerFactory.getLogger(StubRuntimeService.class.getName());
 
     @Override
+    public EfestoClassKey getEfestoClassKeyIdentifier() {
+        return new EfestoClassKey(StubInput.class, Collections.singletonList(String.class));
+    }
+
+
+    @Override
     public boolean canManageInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
-        return toEvaluate instanceof StubInput && isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(),
+        return isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(),
                                                                                 context);
     }
 
     @Override
     public Optional<StubOutput> evaluateInput(StubInput toEvaluate, EfestoRuntimeContext context) {
-        if (!canManageInput(toEvaluate, context)) {
-            throw new KieRuntimeServiceException("Unexpected parameters  " + toEvaluate.getClass() + "  " + context.getClass());
-        }
         return getStubOutput(toEvaluate, context);
     }
 
