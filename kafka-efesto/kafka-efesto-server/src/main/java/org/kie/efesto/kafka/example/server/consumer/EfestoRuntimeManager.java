@@ -20,32 +20,28 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
-import java.util.function.BiConsumer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.kie.api.pmml.PMMLRequestData;
 import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.common.api.model.GeneratedResources;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContextImpl;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextImpl;
 import org.kie.efesto.kafka.example.server.storage.ContextStorage;
 import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
-import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.BaseEfestoInput;
 import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
 import org.kie.efesto.runtimemanager.api.model.EfestoOriginalTypeGeneratedType;
 import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
 import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
-import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContextImpl;
 import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
 import org.kie.efesto.runtimemanager.api.utils.SPIUtils;
-import org.kie.pmml.api.identifiers.AbstractModelLocalUriIdPmml;
+import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextImpl;
+import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.kie.efesto.kafka.example.server.serialization.JSONUtil.getModelLocalUriId;
-import static org.kie.efesto.kafka.example.server.serialization.JSONUtil.objectMapper;
 
 public class EfestoRuntimeManager {
 
@@ -62,7 +58,7 @@ public class EfestoRuntimeManager {
 
     public static EfestoOutput evaluateModel(JsonNode jsonNode, Map<String, Object> inputData) throws JsonProcessingException {
         ModelLocalUriId modelLocalUriId = getModelLocalUriId(jsonNode);
-        AbstractEfestoInput efestoInput = getMapInput(modelLocalUriId, inputData);
+        BaseEfestoInput efestoInput = getMapInput(modelLocalUriId, inputData);
 
         EfestoRuntimeContext runtimeContext = getEfestoRuntimeContext(modelLocalUriId);
         try {
@@ -117,18 +113,17 @@ public class EfestoRuntimeManager {
             throw new KieRuntimeServiceException(errorMessage);
         }
         EfestoRuntimeContextImpl toReturn =
-                (EfestoRuntimeContextImpl) EfestoRuntimeContext.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
+                (EfestoRuntimeContextImpl) EfestoRuntimeContextUtils.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
         toReturn.addGeneratedClasses(modelLocalUriId, generatedClasses);
         toReturn.getGeneratedResourcesMap().put(model, generatedResources);
         ContextStorage.putEfestoRuntimeContext(modelLocalUriId, toReturn);
         return toReturn;
     }
 
-    private static AbstractEfestoInput<EfestoMapInputDTO> getMapInput(ModelLocalUriId modelLocalUriId,
+    private static BaseEfestoInput<EfestoMapInputDTO> getMapInput(ModelLocalUriId modelLocalUriId,
                                                           Map<String, Object> inputData) {
         EfestoMapInputDTO efestoMapInputDTO = modelLocalUriId.model().equals("drl") ? getDrlMapInput(inputData) : getSimpleMapInput(inputData);
-        return new AbstractEfestoInput<>(modelLocalUriId, efestoMapInputDTO) {
-        };
+        return new BaseEfestoInput<>(modelLocalUriId, efestoMapInputDTO);
     }
 
     private static EfestoMapInputDTO getSimpleMapInput(Map<String, Object> inputData) {

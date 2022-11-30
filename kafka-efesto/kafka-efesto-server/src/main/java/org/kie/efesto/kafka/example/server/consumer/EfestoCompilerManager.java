@@ -28,11 +28,11 @@ import org.kie.efesto.common.api.model.GeneratedExecutableResource;
 import org.kie.efesto.common.api.model.GeneratedResource;
 import org.kie.efesto.common.api.model.GeneratedResources;
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContextImpl;
 import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.kie.efesto.compilationmanager.api.service.CompilationManager;
 import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextImpl;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextUtils;
 import org.kie.efesto.kafka.example.server.storage.ContextStorage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,7 +52,7 @@ public class EfestoCompilerManager {
     public static ModelLocalUriId compileModel(String toCompile, String fileName) {
         EfestoInputStreamResource efestoResource = new EfestoInputStreamResource(new ByteArrayInputStream(toCompile.getBytes(StandardCharsets.UTF_8)),
                                                                       fileName);
-        EfestoCompilationContextImpl compilationContext = (EfestoCompilationContextImpl) EfestoCompilationContext.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
+        EfestoCompilationContextImpl compilationContext = (EfestoCompilationContextImpl) EfestoCompilationContextUtils.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
         try {
             compilationManager.processResource(compilationContext, efestoResource);
             ModelLocalUriId toReturn = getModelLocalUriIdFromGeneratedResourcesMap(compilationContext.getGeneratedResourcesMap());

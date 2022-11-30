@@ -188,12 +188,12 @@
       <artifactId>kie-drl-map-input-runtime</artifactId>
     </dependency>
     <!-- End DRL -->
-    <!-- Base jar for jdrl -->
+<!--    &lt;!&ndash; Base jar for jdrl &ndash;&gt;
     <dependency>
-      <groupId>org.kie</groupId>
+      <groupId>org.drools</groupId>
       <artifactId>ruleunits</artifactId>
       <version>1.0</version>
-    </dependency>
+    </dependency>-->
   </dependencies>
 
 </project>

@@ -1,21 +1,29 @@
 {
   "packageName": "org.drools.example",
-  "globals" : [
+  "globals": [
     {
       "type": "Boolean",
       "name": "approved"
     }
   ],
-  "declaredTypes" : [
+  "declaredTypes": [
     {
-      "name": "MyInt"
+      "name": "MyInt",
+      "fields": [
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ]
     },
     {
-      "value" : "int"
-    },
-    {
-      "name" : "MyDouble",
-      "value" : "double"
+      "name": "MyDouble",
+      "fields": [
+        {
+          "name": "value",
+          "type": "double"
+        }
+      ]
     }
   ],
   "rules": [

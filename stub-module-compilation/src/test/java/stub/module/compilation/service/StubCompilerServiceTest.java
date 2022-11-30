@@ -38,6 +38,7 @@ import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.CompilationManager;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.api.ExecutorA;
@@ -85,7 +86,7 @@ class StubCompilerServiceTest {
     @ParameterizedTest
     @ValueSource(strings = {"ConTen", "ConTenT"})
     void roundTrip(String content) {
-        context = EfestoCompilationContext.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
+        context = EfestoCompilationContextUtils.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
         boolean even = !content.isEmpty() && content.length() % 2 == 0;
         StubResource efestoResource = new StubResource(content);
         compilationManager.processResource(context, efestoResource);

@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContextImpl;
-import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContextImpl;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextImpl;
+import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextImpl;
 
 public class ContextStorage {
 

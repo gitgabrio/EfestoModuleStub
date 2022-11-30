@@ -36,7 +36,7 @@ import stub.module.compilation.model.JDrlCompilationContext;
 import stub.module.compilation.utils.JSONUtils;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.MemoryFileUtils.getFileFromFileName;
 import static stub.module.api.CommonConstants.MODEL_TYPE;
 
 class JDrlCompilerServiceTest {

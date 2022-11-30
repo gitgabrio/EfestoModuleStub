@@ -26,7 +26,6 @@ import stub.module.compilation.model.DeclaredType;
 import stub.module.compilation.model.DeclaredTypeField;
 import stub.module.compilation.model.Global;
 import stub.module.compilation.model.JDRL;
-import stub.module.compilation.model.Query;
 import stub.module.compilation.model.Rule;
 
 public class JSONUtils {
@@ -38,7 +37,7 @@ public class JSONUtils {
     }
 
     private static final Logger logger =
-            LoggerFactory.getLogger(org.kie.efesto.common.api.utils.JSONUtils.class.getName());
+            LoggerFactory.getLogger(JSONUtils.class.getName());
 
     private JSONUtils() {
     }

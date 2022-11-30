@@ -29,6 +29,7 @@ import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
 import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
 import org.kie.efesto.runtimemanager.api.utils.SPIUtils;
+import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextUtils;
 import stub.module.api.ExecutorA;
 import stub.module.api.ExecutorB;
 import stub.module.api.StubExecutor;
@@ -48,7 +49,7 @@ class StubRuntimeServiceTest {
     @BeforeAll
     static void setUp() {
         kieRuntimeService = new StubRuntimeService();
-        context = EfestoRuntimeContext.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
+        context = EfestoRuntimeContextUtils.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
         runtimeManager = SPIUtils.getRuntimeManager(false).orElseThrow(() -> new RuntimeException("Failed to retrieve" +
                                                                                                           " RuntimeManager"));
     }

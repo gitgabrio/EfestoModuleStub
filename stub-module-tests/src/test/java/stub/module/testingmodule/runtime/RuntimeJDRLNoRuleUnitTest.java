@@ -35,13 +35,14 @@ import org.kie.efesto.compilationmanager.api.model.EfestoInputStreamResource;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.CompilationManager;
 import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
-import org.kie.efesto.runtimemanager.api.model.AbstractEfestoInput;
+import org.kie.efesto.runtimemanager.api.model.BaseEfestoInput;
 import org.kie.efesto.runtimemanager.api.model.EfestoInput;
 import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
 import org.kie.efesto.runtimemanager.api.model.EfestoOriginalTypeGeneratedType;
 import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
 import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
 import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.compilation.model.JDrlCompilationContext;
@@ -49,7 +50,7 @@ import stub.module.testingmodule.compilation.CompileJDRLTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.efesto.common.api.utils.CollectionUtils.findAtMostOne;
-import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.MemoryFileUtils.getFileFromFileName;
 import static org.kie.efesto.runtimemanager.api.utils.SPIUtils.getRuntimeManager;
 
 public class RuntimeJDRLNoRuleUnitTest {
@@ -84,8 +85,8 @@ public class RuntimeJDRLNoRuleUnitTest {
         final Map<String, Object> globals = new HashMap<>();
         globals.put("maxAmount", 5000);
         final EfestoRuntimeContext runtimeContext =
-                EfestoRuntimeContext.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader(),
-                                                                compilationContext.getGeneratedResourcesMap());
+                EfestoRuntimeContextUtils.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader(),
+                                                                     compilationContext.getGeneratedResourcesMap());
         applicationWithExpectedMap.forEach(evaluatorBiConsumer(globals, modelLocalUriId, runtimeContext));
     }
 
@@ -105,7 +106,7 @@ public class RuntimeJDRLNoRuleUnitTest {
                                                                      convertedFieldTypeMap,
                                                                      "modelname",
                                                                      "packageName");
-            EfestoInput<EfestoMapInputDTO> input = new AbstractEfestoInput<>(modelLocalUriId,
+            EfestoInput<EfestoMapInputDTO> input = new BaseEfestoInput<>(modelLocalUriId,
                                                                              darMapInputDTO) {
             };
             Collection<EfestoOutput> retrieved = runtimeManager.evaluateInput(runtimeContext, input);

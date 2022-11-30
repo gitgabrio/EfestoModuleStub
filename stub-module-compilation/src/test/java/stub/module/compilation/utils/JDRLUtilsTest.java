@@ -22,7 +22,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import stub.module.compilation.model.JDRL;
 
-import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.MemoryFileUtils.getFileFromFileName;
 
 class JDRLUtilsTest {
 

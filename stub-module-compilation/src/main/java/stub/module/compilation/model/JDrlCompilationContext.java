@@ -1,7 +1,8 @@
 package stub.module.compilation.model;
 
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContextImpl;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextImpl;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextUtils;
 import org.kie.internal.builder.KnowledgeBuilderConfiguration;
 import org.kie.memorycompiler.KieMemoryCompiler;
 
@@ -16,7 +17,7 @@ public interface JDrlCompilationContext extends EfestoCompilationContext {
     }
 
     static JDrlCompilationContext buildWithEfestoCompilationContext(EfestoCompilationContextImpl context) {
-        return (JDrlCompilationContext) EfestoCompilationContext.buildFromContext(context, JDrlCompilationContextImpl.class);
+        return (JDrlCompilationContext) EfestoCompilationContextUtils.buildFromContext(context, JDrlCompilationContextImpl.class);
     }
 
     KnowledgeBuilderConfiguration newKnowledgeBuilderConfiguration();

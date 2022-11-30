@@ -8,7 +8,7 @@ import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.MemoryFileUtils.getFileFromFileName;
 import static org.kie.efesto.kafka.example.server.consumer.EfestoCompilerManager.compileModel;
 import static org.kie.efesto.kafka.example.server.consumer.ServerCompileConsumer.startCompileConsumer;
 import static org.kie.efesto.kafka.example.server.consumer.ServerCompiledConsumer.startCompiledConsumer;

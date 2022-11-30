@@ -20,8 +20,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
-import org.kie.efesto.common.api.serialization.ModelLocalUriIdDeSerializer;
-import org.kie.efesto.common.api.serialization.ModelLocalUriIdSerializer;
+import org.kie.efesto.common.core.serialization.ModelLocalUriIdDeSerializer;
+import org.kie.efesto.common.core.serialization.ModelLocalUriIdSerializer;
 import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
 import org.kie.pmml.api.identifiers.AbstractModelLocalUriIdPmml;
 

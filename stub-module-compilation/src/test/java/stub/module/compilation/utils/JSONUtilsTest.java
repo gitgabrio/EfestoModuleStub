@@ -33,7 +33,7 @@ import stub.module.compilation.model.JDRL;
 import stub.module.compilation.model.Rule;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.MemoryFileUtils.getFileFromFileName;
 
 class JSONUtilsTest {
 

@@ -38,7 +38,7 @@ import stub.module.compilation.model.JDrlCompilationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.efesto.common.api.utils.CollectionUtils.findAtMostOne;
-import static org.kie.efesto.common.api.utils.FileUtils.getFileFromFileName;
+import static org.kie.efesto.common.api.utils.MemoryFileUtils.getFileFromFileName;
 
 public class CompileJDRLTest {
 

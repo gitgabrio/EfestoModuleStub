@@ -37,6 +37,10 @@
       <artifactId>efesto-compilation-manager-api</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>efesto-compilation-manager-core</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.kie.efesto</groupId>
       <artifactId>stub-module-api</artifactId>
     </dependency>
@@ -53,12 +57,6 @@
       <artifactId>drools-ruleunits-impl</artifactId>
     </dependency>
     <!-- Test -->
-    <!-- needed to have a CompilationManager instance -->
-    <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>efesto-compilation-manager-core</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
 
