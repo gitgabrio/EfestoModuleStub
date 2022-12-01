@@ -47,7 +47,7 @@ public class EfestoRuntimeManager {
 
     private static final RuntimeManager runtimeManager;
 
-    private static final Logger logger = LoggerFactory.getLogger(ServerCompileConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(EfestoRuntimeManager.class);
 
     private static final String CHECK_CLASSPATH = "check classpath and dependencies!";
 

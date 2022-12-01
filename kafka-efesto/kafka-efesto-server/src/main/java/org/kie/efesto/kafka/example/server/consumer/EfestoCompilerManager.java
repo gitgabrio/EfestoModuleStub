@@ -43,7 +43,7 @@ public class EfestoCompilerManager {
 
     private static final CompilationManager compilationManager;
 
-    private static final Logger logger = LoggerFactory.getLogger(ServerCompileConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(EfestoCompilerManager.class);
 
     static {
         compilationManager = SPIUtils.getCompilationManager(false).orElseThrow(() -> new RuntimeException("Failed to retrieve CompilationManager"));
