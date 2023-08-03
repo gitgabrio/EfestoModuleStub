@@ -13,10 +13,11 @@
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <drools.version>8.29.0-SNAPSHOT</drools.version>
+    <drools.version>8.43.0-SNAPSHOT</drools.version>
     <version.org.junit>5.8.2</version.org.junit>
     <version.slf4j>1.7.30</version.slf4j>
     <version.surefire>2.22.2</version.surefire>
+    <version.org.assertj>3.24.2</version.org.assertj>
   </properties>
 
   <dependencyManagement>
@@ -108,6 +109,12 @@
         <artifactId>slf4j-simple</artifactId>
         <version>${version.slf4j}</version>
       </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${version.org.assertj}</version>
+        <scope>test</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
@@ -121,6 +128,11 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-simple</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.assertj</groupId>
+      <artifactId>assertj-core</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -141,6 +153,8 @@
     <module>stub-module-api</module>
     <module>stub-module-compilation</module>
     <module>stub-module-runtime</module>
+    <module>stub-module-tests</module>
+    <module>kafka-efesto</module>
   </modules>
 
 

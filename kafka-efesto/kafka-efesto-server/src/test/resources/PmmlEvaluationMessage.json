@@ -1,0 +1,9 @@
+{
+  "modelLocalUriIdString": "{\"model\":\"pmml\",\"basePath\":\"/LoanApprovalRegression/LoanApprovalRegression\",\"fullPath\":\"/pmml/LoanApprovalRegression/LoanApprovalRegression\",\"fileName\":\"LoanApprovalRegression\"}\"}",
+  "inputData": {
+    "approved": true,
+    "applicantName": "John"
+  }
+}
+
+

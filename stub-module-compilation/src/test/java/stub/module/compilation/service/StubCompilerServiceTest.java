@@ -15,13 +15,6 @@
  */
 package stub.module.compilation.service;
 
-import java.nio.file.Paths;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,15 +22,16 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.kie.efesto.common.api.identifiers.LocalUri;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.common.api.io.IndexFile;
+import org.kie.efesto.common.api.model.EfestoCompilationContext;
 import org.kie.efesto.common.api.model.GeneratedExecutableResource;
 import org.kie.efesto.common.api.model.GeneratedResources;
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.CompilationManager;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
 import org.kie.efesto.compilationmanager.api.utils.SPIUtils;
+import org.kie.efesto.compilationmanager.core.model.EfestoCompilationContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.api.ExecutorA;
@@ -46,10 +40,16 @@ import stub.module.api.StubExecutor;
 import stub.module.compilation.model.StubCallableOutput;
 import stub.module.compilation.model.StubResource;
 
+import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.kie.efesto.common.api.identifiers.LocalUri.SLASH;
 import static org.kie.efesto.common.api.utils.CollectionUtils.findAtMostOne;
-import static stub.module.api.CommonConstants.MODEL_TYPE;
+import static stub.module.api.CommonConstants.JDRL_MODEL_TYPE;
 
 class StubCompilerServiceTest {
 
@@ -85,7 +85,7 @@ class StubCompilerServiceTest {
     @ParameterizedTest
     @ValueSource(strings = {"ConTen", "ConTenT"})
     void roundTrip(String content) {
-        context = EfestoCompilationContext.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
+        context = EfestoCompilationContextUtils.buildWithParentClassLoader(Thread.currentThread().getContextClassLoader());
         boolean even = !content.isEmpty() && content.length() % 2 == 0;
         StubResource efestoResource = new StubResource(content);
         compilationManager.processResource(context, efestoResource);
@@ -124,15 +124,15 @@ class StubCompilerServiceTest {
         assertThat(toValidate).isNotNull();
         assertThat(toValidate.size()).isEqualTo(1);
         IndexFile indexFile = toValidate.iterator().next();
-        assertThat(indexFile.getModel()).isEqualTo(MODEL_TYPE);
+        assertThat(indexFile.getModel()).isEqualTo(JDRL_MODEL_TYPE);
     }
 
     private void commonValidateGeneratedResources(Map<String, GeneratedResources> generatedResourcesMap, boolean even) {
-        assertThat(generatedResourcesMap.containsKey(MODEL_TYPE)).isTrue();
-        GeneratedResources generatedResources = generatedResourcesMap.get(MODEL_TYPE);
+        assertThat(generatedResourcesMap.containsKey(JDRL_MODEL_TYPE)).isTrue();
+        GeneratedResources generatedResources = generatedResourcesMap.get(JDRL_MODEL_TYPE);
         Optional<GeneratedExecutableResource> generatedExecutableResource = findAtMostOne(generatedResources,
-                                                                                          generatedResource -> generatedResource instanceof GeneratedExecutableResource,
-                                                                                          (s1, s2) -> new KieCompilerServiceException("Found more than one GeneratedExecutableResource: " + s1 + " and " + s2))
+                generatedResource -> generatedResource instanceof GeneratedExecutableResource,
+                (s1, s2) -> new KieCompilerServiceException("Found more than one GeneratedExecutableResource: " + s1 + " and " + s2))
                 .map(GeneratedExecutableResource.class::cast);
         assertThat(generatedExecutableResource).isPresent();
         ModelLocalUriId expected = getModelUri(even);
@@ -142,11 +142,11 @@ class StubCompilerServiceTest {
     private ModelLocalUriId getModelUri(boolean even) {
         ModelLocalUriId toReturn;
         if (even) {
-            String path = SLASH + MODEL_TYPE + SLASH + "EventA";
+            String path = SLASH + JDRL_MODEL_TYPE + SLASH + "EventA";
             LocalUri parsed = LocalUri.parse(path);
             toReturn = new ModelLocalUriId(parsed);
         } else {
-            String path = SLASH + MODEL_TYPE + SLASH + "EventB";
+            String path = SLASH + JDRL_MODEL_TYPE + SLASH + "EventB";
             LocalUri parsed = LocalUri.parse(path);
             toReturn = new ModelLocalUriId(parsed);
         }

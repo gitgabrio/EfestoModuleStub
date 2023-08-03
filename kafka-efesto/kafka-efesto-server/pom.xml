@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.kie.efesto</groupId>
+        <artifactId>kafka-efesto</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kafka-efesto-server</artifactId>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.kie</groupId>
+                <artifactId>efesto-kafka-runtime-provider</artifactId>
+                <version>${drools.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <!-- Efesto -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>efesto-kafka-runtime-provider</artifactId>
+        </dependency>
+        <!--Efesto Plugins
+        PMML -->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-pmml-evaluator-api</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.kie</groupId>-->
+<!--            <artifactId>kie-pmml-evaluator-core</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-drl-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.kie</groupId>
+            <artifactId>kie-drl-runtime-common</artifactId>
+        </dependency>
+        <!-- Test -->
+        <dependency>
+            <artifactId>junit-jupiter</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

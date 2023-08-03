@@ -1,0 +1,56 @@
+{
+  "packageName": "org.drools.example",
+  "globals": [
+    {
+      "type": "Boolean",
+      "name": "approved"
+    }
+  ],
+  "declaredTypes": [
+    {
+      "name": "MyInt",
+      "fields": [
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "name": "MyDouble",
+      "fields": [
+        {
+          "name": "value",
+          "type": "double"
+        }
+      ]
+    }
+  ],
+  "rules": [
+    {
+      "name": "SmallDepositApprove",
+      "when": "Boolean(applicantAge >= 20) && Boolean(deposit < 1000) && Boolean(amount <= 2000)",
+      "then": "approved = true;"
+    },
+    {
+      "name": "SmallDepositReject",
+      "when": "Boolean(applicantAge >= 20) && Boolean(deposit < 1000) &&  Boolean(amount > 2000)",
+      "then": "approved = false;"
+    },
+    {
+      "name": "LargeDepositApprove",
+      "when": "Boolean(applicantAge >= 20) && Boolean(deposit >= 1000) && Boolean(amount <= maxAmount)",
+      "then": "approved = true;"
+    },
+    {
+      "name": "LargeDepositReject",
+      "when": "Boolean(applicantAge >= 20) && Boolean(deposit >= 1000) && Boolean(amount > maxAmount)",
+      "then": "approved = false;"
+    },
+    {
+      "name": "NotAdultApplication",
+      "when": "Boolean(applicantAge < 20)",
+      "then": "approved = false;"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "modelLocalUriIds": [
+    {
+      "model": "example",
+      "basePath": "/some-id/instances/some-instance-0",
+      "fullPath": "/example/some-id/instances/some-instance-0"
+    },
+    {
+      "model": "example",
+      "basePath": "/some-id/instances/some-instance-1",
+      "fullPath": "/example/some-id/instances/some-instance-1"
+    },
+    {
+      "model": "example",
+      "basePath": "/some-id/instances/some-instance-2",
+      "fullPath": "/example/some-id/instances/some-instance-2"
+    }
+  ]
+}

@@ -17,7 +17,8 @@ package stub.module.api;
 
 public class CommonConstants {
 
-    public static final String MODEL_TYPE = "stub";
+    public static final String JDRL_MODEL_TYPE = "jdrl";
+    public static final String STUB_MODEL_TYPE = "stub";
 
     private CommonConstants() {
     }

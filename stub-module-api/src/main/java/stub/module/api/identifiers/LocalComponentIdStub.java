@@ -19,7 +19,7 @@ import org.kie.efesto.common.api.identifiers.Id;
 import org.kie.efesto.common.api.identifiers.LocalUri;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 
-import static stub.module.api.CommonConstants.MODEL_TYPE;
+import static stub.module.api.CommonConstants.JDRL_MODEL_TYPE;
 
 public class LocalComponentIdStub extends ModelLocalUriId implements Id {
 
@@ -27,7 +27,7 @@ public class LocalComponentIdStub extends ModelLocalUriId implements Id {
 
 
     public LocalComponentIdStub(String name) {
-        super(LocalUri.Root.append(MODEL_TYPE).append(name));
+        super(LocalUri.Root.append(JDRL_MODEL_TYPE).append(name));
     }
 
 }

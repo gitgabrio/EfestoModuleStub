@@ -15,12 +15,9 @@
  */
 package stub.module.compilation.service;
 
-import java.util.Collections;
-import java.util.List;
-
 import org.kie.efesto.common.api.identifiers.ReflectiveAppRoot;
+import org.kie.efesto.common.api.model.EfestoCompilationContext;
 import org.kie.efesto.compilationmanager.api.exceptions.KieCompilerServiceException;
-import org.kie.efesto.compilationmanager.api.model.EfestoCompilationContext;
 import org.kie.efesto.compilationmanager.api.model.EfestoCompilationOutput;
 import org.kie.efesto.compilationmanager.api.model.EfestoResource;
 import org.kie.efesto.compilationmanager.api.service.KieCompilerService;
@@ -32,7 +29,10 @@ import stub.module.api.identifiers.StubIdFactory;
 import stub.module.compilation.model.StubCallableOutput;
 import stub.module.compilation.model.StubResource;
 
-import static stub.module.api.CommonConstants.MODEL_TYPE;
+import java.util.Collections;
+import java.util.List;
+
+import static stub.module.api.CommonConstants.STUB_MODEL_TYPE;
 
 public class StubCompilerService implements KieCompilerService<EfestoCompilationOutput, EfestoCompilationContext> {
 
@@ -51,7 +51,7 @@ public class StubCompilerService implements KieCompilerService<EfestoCompilation
 
     @Override
     public String getModelType() {
-        return MODEL_TYPE;
+        return STUB_MODEL_TYPE;
     }
 
     private EfestoCompilationOutput getEfestoCompilationOutput(StubResource resource) {

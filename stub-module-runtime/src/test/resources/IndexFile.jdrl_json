@@ -1,0 +1,11 @@
+[
+  {
+    "step-type": "redirect",
+    "modelLocalUriId": {
+      "model": "jdrl",
+      "basePath": "/LoanRules",
+      "fullPath": "/jdrl/LoanRules"
+    },
+    "target": "drl"
+  }
+]

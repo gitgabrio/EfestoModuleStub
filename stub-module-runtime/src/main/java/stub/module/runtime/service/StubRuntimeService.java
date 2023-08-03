@@ -15,14 +15,12 @@
  */
 package stub.module.runtime.service;
 
-import java.util.Collections;
-import java.util.Optional;
-
 import org.kie.efesto.common.api.cache.EfestoClassKey;
+import org.kie.efesto.common.api.model.EfestoRuntimeContext;
 import org.kie.efesto.common.api.model.GeneratedExecutableResource;
 import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.efesto.runtimemanager.api.model.EfestoInput;
-import org.kie.efesto.runtimemanager.api.model.EfestoRuntimeContext;
+import org.kie.efesto.runtimemanager.api.model.EfestoLocalRuntimeContext;
 import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +28,11 @@ import stub.module.api.StubExecutor;
 import stub.module.runtime.model.StubInput;
 import stub.module.runtime.model.StubOutput;
 
+import java.util.Optional;
+
 import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.getGeneratedExecutableResource;
 import static org.kie.efesto.runtimemanager.api.utils.GeneratedResourceUtils.isPresentExecutableOrRedirect;
-import static stub.module.api.CommonConstants.MODEL_TYPE;
+import static stub.module.api.CommonConstants.STUB_MODEL_TYPE;
 
 public class StubRuntimeService implements KieRuntimeService<String, String, StubInput, StubOutput,
         EfestoRuntimeContext> {
@@ -41,24 +41,32 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
 
     @Override
     public EfestoClassKey getEfestoClassKeyIdentifier() {
-        return new EfestoClassKey(StubInput.class, Collections.singletonList(String.class));
+        return new EfestoClassKey(StubInput.class, String.class);
     }
 
 
     @Override
     public boolean canManageInput(EfestoInput toEvaluate, EfestoRuntimeContext context) {
-        return isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(),
-                                                                                context);
+        return toEvaluate instanceof StubInput && isPresentExecutableOrRedirect(toEvaluate.getModelLocalUriId(),
+                context);
     }
 
     @Override
     public Optional<StubOutput> evaluateInput(StubInput toEvaluate, EfestoRuntimeContext context) {
+        if (!canManageInput(toEvaluate, context)) {
+            throw new KieRuntimeServiceException("Unexpected parameters  " + toEvaluate.getClass() + "  " + context.getClass());
+        }
         return getStubOutput(toEvaluate, context);
     }
 
     @Override
     public String getModelType() {
-        return MODEL_TYPE;
+        return STUB_MODEL_TYPE;
+    }
+
+    @Override
+    public Optional<StubInput> parseJsonInput(String modelLocalUriIdString, String inputDataString) {
+        return Optional.empty();
     }
 
     private Optional<StubOutput> getStubOutput(StubInput stubInput, EfestoRuntimeContext context) {
@@ -75,7 +83,7 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
     private StubExecutor loadStubExecutor(StubInput stubInput, EfestoRuntimeContext context) {
         Optional<GeneratedExecutableResource> generatedExecutableResource =
                 getGeneratedExecutableResource(stubInput.getModelLocalUriId(),
-                                               context.getGeneratedResourcesMap());
+                        context.getGeneratedResourcesMap());
         if (generatedExecutableResource.isEmpty()) {
             throw new KieRuntimeServiceException("Failed to load GeneratedExecutableResource for " + stubInput.getModelLocalUriId());
         }
@@ -83,7 +91,7 @@ public class StubRuntimeService implements KieRuntimeService<String, String, Stu
         try {
             String stubExecutorClassName = executableResource.getFullClassNames().get(0);
             final Class<? extends StubExecutor> aClass =
-                    (Class<? extends StubExecutor>) context.loadClass(stubExecutorClassName);
+                    (Class<? extends StubExecutor>) ((EfestoLocalRuntimeContext) context).loadClass(stubExecutorClassName);
             return aClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
             throw new KieRuntimeServiceException(e);

@@ -1,0 +1,105 @@
+[
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PA4.LambdaPredicateA4A538252603D113DF5C3325E301D457"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.P74.LambdaPredicate74DA0F4F18206418D7279864AA4890FC"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.P1A.LambdaPredicate1A7060AC165662654A57B36E54647362"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PB9.LambdaExtractorB95EC773E141140DC07012C539C210EF"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.Rules33ae415de2d5431285875efe905c329b_rule_NotAdultApplication"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PEB.LambdaExtractorEB7215397765962D1D219992FE81D9BF"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PFC.LambdaConsequenceFCD6009004A2C4AA104AC4FE459F1BF4"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PDE.LambdaPredicateDED75B5AC37C4BE574A0D96BB77B68A3"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.Rules33ae415de2d5431285875efe905c329b"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PDA.LambdaPredicateDA4A03D422FD3C445171BA218CBFB787"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.DomainClassesMetadata33ae415de2d5431285875efe905c329b$java_lang_Integer_Metadata"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.Rules33ae415de2d5431285875efe905c329b_rule_LargeDepositApprove"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.DomainClassesMetadata33ae415de2d5431285875efe905c329b$java_util_List_Metadata"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PCC.LambdaConsequenceCC0BD1AEACA08BACB1C08455DD5F5F22"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.DomainClassesMetadata33ae415de2d5431285875efe905c329b"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PD1.LambdaPredicateD1F575155DA8974A912BE3E2FA4EF8A9"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.P74.LambdaPredicate741759C3ABBD1DA1CD51DB5297D8A32A"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.Rules33ae415de2d5431285875efe905c329b_rule_SmallDepositReject"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.Rules33ae415de2d5431285875efe905c329b_rule_LargeDepositReject"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.P58.LambdaPredicate58AB6F1244A68DDBDF5B3500297C60B3"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.PF9.LambdaExtractorF9D9EC35030E912CC9DCFF3868AE5671"
+  },
+  {
+    "step-type": "executable",
+    "modelLocalUriId": {
+      "model": "drl",
+      "basePath": "/LoanRules",
+      "fullPath": "/drl/LoanRules"
+    },
+    "fullClassNames": [
+      "org.drools.example.Rules33ae415de2d5431285875efe905c329b"
+    ]
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.Rules33ae415de2d5431285875efe905c329b_rule_SmallDepositApprove"
+  },
+  {
+    "step-type": "class",
+    "fullClassName": "org.drools.example.DomainClassesMetadata33ae415de2d5431285875efe905c329b$org_drools_example_LoanApplication_Metadata"
+  }
+]

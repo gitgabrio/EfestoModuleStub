@@ -20,11 +20,14 @@
       <groupId>org.kie.efesto</groupId>
       <artifactId>stub-module-api</artifactId>
     </dependency>
-    <!-- Test -->
-    <!-- needed to have a RuntimeManager instance -->
     <dependency>
       <groupId>org.kie</groupId>
       <artifactId>efesto-runtime-manager-core</artifactId>
+    </dependency>
+    <!-- Test -->
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-drl-map-input-runtime</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>
