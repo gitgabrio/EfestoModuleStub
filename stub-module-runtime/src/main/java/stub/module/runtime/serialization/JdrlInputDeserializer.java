@@ -68,19 +68,7 @@ public class JdrlInputDeserializer extends StdDeserializer<JdrlInput> {
             }
             final Map<String, Object> globals = new HashMap<>();
             if (inputDataNode.get("globals") != null) {
-                ArrayNode globalsNode = (ArrayNode) inputDataNode.get("globals");
-                Iterator<JsonNode> elements = globalsNode.elements();
-                while (elements.hasNext()) {
-                    try {
-                        ObjectNode next = (ObjectNode) elements.next();
-                        String key = next.get("key").asText();
-                        String kind = next.get("kind").asText();
-                        Class<?> actualClass = Class.forName(kind);
-                        globals.put(key, getObjectMapper().readValue(next.get("value").toString(), actualClass));
-                    } catch (Exception e) {
-                        throw new RuntimeException(String.format("Failed to deserialize %s as JdrlInput", node), e);
-                    }
-                }
+                globals.putAll(getObjectMapper().treeToValue(inputDataNode.get("globals"), Map.class));
             }
             EfestoMapInputDTO inputData = new EfestoMapInputDTO(inserts, globals,
                     Collections.emptyMap(),

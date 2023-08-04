@@ -58,25 +58,14 @@ public class JdrlInputSerializer extends StdSerializer<JdrlInput> {
             }
             gen.writeEndArray();
             gen.writeFieldName("globals");
-            gen.writeStartArray();
+            gen.writeStartObject();
             for (Map.Entry<String, Object> global : inputData.getGlobals().entrySet()) {
-                gen.writeStartObject();
-                gen.writeStringField("key", global.getKey());
-                gen.writeStringField("kind", global.getValue().getClass().getCanonicalName());
-                gen.writeFieldName("value");
+                gen.writeFieldName(global.getKey());
                 gen.writeObject(global.getValue());
-                gen.writeEndObject();
             }
-            gen.writeEndArray();
+            gen.writeEndObject();
         }
         gen.writeEndObject();
-
-        // gen.writeStringField("kind", value.getClass().getCanonicalName());
-
-
-//        gen.writeStringField("model", value.model());
-//        gen.writeStringField("basePath", decodedPath(value.basePath()));
-//        gen.writeStringField("fullPath", decodedPath(value.fullPath()));
         gen.writeEndObject();
     }
 

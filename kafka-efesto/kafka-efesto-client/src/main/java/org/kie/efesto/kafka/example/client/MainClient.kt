@@ -21,7 +21,7 @@ import org.kie.efesto.kafka.example.client.managers.EfestoCompilerManager.compil
 import org.kie.efesto.kafka.example.client.managers.EfestoRuntimeManager.startRuntime
 import java.nio.file.Files
 
-object Main {
+object MainClient {
     private const val pmmlFileName = "LoanApprovalRegression.pmml"
     private const val jdrlFileName = "LoanRules.jdrl"
 

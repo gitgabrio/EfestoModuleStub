@@ -44,17 +44,9 @@
         }
       }
     ],
-    "globals": [
-      {
-        "key": "approvedApplications",
-        "kind": "java.util.ArrayList",
-        "value": []
-      },
-      {
-        "key": "maxAmount",
-        "kind": "java.lang.Integer",
-        "value": 5000
-      }
-    ]
+    "globals": {
+      "approvedApplications": [],
+      "maxAmount": 5000
+    }
   }
 }

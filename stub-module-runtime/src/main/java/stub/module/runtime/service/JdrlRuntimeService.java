@@ -110,12 +110,9 @@ public class JdrlRuntimeService implements KieRuntimeService<EfestoMapInputDTO, 
             inserts = (List<Object>) inputData.get("inserts");
             inputData.remove("inserts");
         }
-        Map<String, Object> globals = new HashMap<>();
+        final Map<String, Object> globals = new HashMap<>();
         if (inputData.containsKey("globals")) {
-            List<Map<String, Object>> globalsList = (List<Map<String, Object>>) inputData.get("globals");
-            for (Map<String, Object> globalElement : globalsList) {
-                globals.put((String) globalElement.get("key"), globalElement.get("value"));
-            }
+            globals.putAll((Map<String, Object>)inputData.get("globals"));
             inputData.remove("globals");
         }
         String packageName = (String) inputData.get("packageName");

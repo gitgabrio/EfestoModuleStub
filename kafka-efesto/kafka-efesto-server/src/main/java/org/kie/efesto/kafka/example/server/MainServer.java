@@ -6,9 +6,9 @@ import org.kie.efesto.kafka.runtime.provider.service.KafkaRuntimeServiceGatewayP
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Main {
+public class MainServer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+    private static final Logger logger = LoggerFactory.getLogger(MainServer.class);
 
     public static void main(String[] args) {
         KafkaRuntimeServiceGatewayProviderImpl runtimeServiceProvider = KafkaSPIUtils.getRuntimeServiceProviders(true)
