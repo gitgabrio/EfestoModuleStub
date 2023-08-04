@@ -2,7 +2,7 @@ package stub.module.runtime.serialization;
 
 import com.fasterxml.jackson.databind.JsonSerializer;
 import org.kie.efesto.common.core.serialization.SerializerService;
-import stub.module.runtime.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlInput;
 
 public class JdrlInputSerializerService implements SerializerService<JdrlInput> {
 

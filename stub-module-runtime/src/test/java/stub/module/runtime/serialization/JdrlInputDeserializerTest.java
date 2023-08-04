@@ -2,7 +2,7 @@ package stub.module.runtime.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.Test;
-import stub.module.runtime.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlInput;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.kie.efesto.common.core.utils.JSONUtils.getObjectMapper;

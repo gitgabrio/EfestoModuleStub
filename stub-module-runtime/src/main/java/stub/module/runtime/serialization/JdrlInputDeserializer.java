@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.kie.efesto.common.api.exceptions.KieEfestoCommonException;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
-import stub.module.runtime.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlInput;
 
 import java.io.IOException;
 import java.util.*;

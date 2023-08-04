@@ -20,6 +20,8 @@ import org.kie.efesto.kafka.api.service.KafkaRuntimeManager;
 import org.kie.efesto.kafka.api.utils.KafkaSPIUtils;
 import org.kie.efesto.runtimemanager.api.exceptions.KieRuntimeServiceException;
 import org.kie.efesto.runtimemanager.api.model.EfestoOutput;
+import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
+import org.kie.efesto.runtimemanager.api.utils.SPIUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,14 +29,14 @@ import java.util.Optional;
 
 public class EfestoRuntimeManager {
 
-    private static final KafkaRuntimeManager runtimeManager;
+    private static final RuntimeManager runtimeManager;
 
     private static final Logger logger = LoggerFactory.getLogger(EfestoRuntimeManager.class);
 
     private static final String CHECK_CLASSPATH = "check classpath and dependencies!";
 
     static {
-        runtimeManager = KafkaSPIUtils.getRuntimeManager(true).orElseThrow(() -> new RuntimeException("Failed to retrieve" +
+        runtimeManager = SPIUtils.getRuntimeManager(true).orElseThrow(() -> new RuntimeException("Failed to retrieve" +
                 " RuntimeManager"));
     }
 

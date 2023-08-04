@@ -19,11 +19,10 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
-import stub.module.runtime.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlInput;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.function.Consumer;
 
 public class JdrlInputSerializer extends StdSerializer<JdrlInput> {
 

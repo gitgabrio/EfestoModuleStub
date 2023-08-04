@@ -30,8 +30,8 @@ import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.compilation.model.JDrlCompilationContext;
-import stub.module.runtime.model.JdrlInput;
-import stub.module.runtime.model.JdrlOutput;
+import stub.module.runtime.api.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlOutput;
 import stub.module.testingmodule.compilation.CompileJDRLTest;
 
 import java.io.File;
@@ -41,7 +41,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;

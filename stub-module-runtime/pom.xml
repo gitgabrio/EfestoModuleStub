@@ -13,12 +13,8 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>efesto-runtime-manager-api</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.kie.efesto</groupId>
-      <artifactId>stub-module-api</artifactId>
+      <artifactId>stub-module-runtime-api</artifactId>
     </dependency>
     <dependency>
       <groupId>org.kie</groupId>

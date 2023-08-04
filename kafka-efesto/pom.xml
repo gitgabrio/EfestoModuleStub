@@ -22,7 +22,7 @@
         <version.surefire>2.22.2</version.surefire>
         <version.org.assertj>3.24.2</version.org.assertj>
         <kotlin.version>1.7.10</kotlin.version>
-        <jackson-databind.version>2.13.3</jackson-databind.version>
+        <jackson-databind.version>2.15.2</jackson-databind.version>
         <kafka-clients.version>3.2.3</kafka-clients.version>
         <connect-json.version>3.2.2</connect-json.version>
     </properties>

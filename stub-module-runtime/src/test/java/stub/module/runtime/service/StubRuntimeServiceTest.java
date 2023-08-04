@@ -30,8 +30,8 @@ import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextUtils;
 import stub.module.api.ExecutorA;
 import stub.module.api.ExecutorB;
 import stub.module.api.StubExecutor;
-import stub.module.runtime.model.StubInput;
-import stub.module.runtime.model.StubOutput;
+import stub.module.runtime.api.model.StubInput;
+import stub.module.runtime.api.model.StubOutput;
 
 import java.util.Collection;
 import java.util.Optional;

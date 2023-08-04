@@ -5,7 +5,7 @@ import org.drools.example.Applicant;
 import org.drools.example.LoanApplication;
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
-import stub.module.runtime.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlInput;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package stub.module.runtime.serialization;
 
 import org.junit.jupiter.api.Test;
-import stub.module.runtime.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlInput;
 
 import java.io.IOException;
 

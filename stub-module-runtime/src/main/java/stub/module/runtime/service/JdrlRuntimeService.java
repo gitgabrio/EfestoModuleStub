@@ -26,10 +26,9 @@ import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import stub.module.runtime.model.JdrlInput;
-import stub.module.runtime.model.JdrlOutput;
+import stub.module.runtime.api.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlOutput;
 
-import java.lang.reflect.Type;
 import java.util.*;
 
 import static org.kie.efesto.common.core.utils.JSONUtils.getInputData;
@@ -113,11 +112,14 @@ public class JdrlRuntimeService implements KieRuntimeService<EfestoMapInputDTO, 
         }
         Map<String, Object> globals = new HashMap<>();
         if (inputData.containsKey("globals")) {
-            globals = (Map<String, Object>) inputData.get("globals");
+            List<Map<String, Object>> globalsList = (List<Map<String, Object>>) inputData.get("globals");
+            for (Map<String, Object> globalElement : globalsList) {
+                globals.put((String) globalElement.get("key"), globalElement.get("value"));
+            }
             inputData.remove("globals");
         }
-        String packageName = (String) inputData.get("package");
-        inputData.remove("package");
+        String packageName = (String) inputData.get("packageName");
+        inputData.remove("packageName");
         String modelName = (String) inputData.get("modelName");
         inputData.remove("modelName");
         final Map<String, EfestoOriginalTypeGeneratedType> fieldTypeMap = new HashMap<>();

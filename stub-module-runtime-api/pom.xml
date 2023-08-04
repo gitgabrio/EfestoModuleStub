@@ -9,16 +9,23 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>stub-module-api</artifactId>
+    <artifactId>stub-module-runtime-api</artifactId>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
+            <groupId>org.kie.efesto</groupId>
+            <artifactId>stub-module-api</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.kie</groupId>
-            <artifactId>efesto-common-api</artifactId>
-            <version>${drools.version}</version>
-            <scope>compile</scope>
+            <artifactId>efesto-runtime-manager-api</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>

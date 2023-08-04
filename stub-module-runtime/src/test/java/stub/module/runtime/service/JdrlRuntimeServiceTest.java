@@ -27,8 +27,8 @@ import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.kie.efesto.runtimemanager.api.service.RuntimeManager;
 import org.kie.efesto.runtimemanager.api.utils.SPIUtils;
 import org.kie.efesto.runtimemanager.core.model.EfestoRuntimeContextUtils;
-import stub.module.runtime.model.JdrlInput;
-import stub.module.runtime.model.JdrlOutput;
+import stub.module.runtime.api.model.JdrlInput;
+import stub.module.runtime.api.model.JdrlOutput;
 
 import java.util.*;
 import java.util.stream.Collectors;

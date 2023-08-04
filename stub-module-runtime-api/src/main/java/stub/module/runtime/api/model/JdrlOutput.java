@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.runtime.model;
+package stub.module.runtime.api.model;
 
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.model.AbstractEfestoOutput;
@@ -21,6 +21,9 @@ import org.kie.efesto.runtimemanager.api.model.AbstractEfestoOutput;
 import java.util.Map;
 
 public class JdrlOutput extends AbstractEfestoOutput<Map<String, Object>> {
+
+    public JdrlOutput() {
+    }
 
     public JdrlOutput(ModelLocalUriId modelLocalUriId, Map<String, Object> outputData) {
         super(modelLocalUriId, outputData);

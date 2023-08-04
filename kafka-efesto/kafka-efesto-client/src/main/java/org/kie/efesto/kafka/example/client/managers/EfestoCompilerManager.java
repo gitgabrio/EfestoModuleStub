@@ -58,7 +58,7 @@ public class EfestoCompilerManager {
             compilationManager.processResource(compilationContext, efestoResource);
             ModelLocalUriId toReturn = getModelLocalUriIdFromGeneratedResourcesMap(compilationContext.getGeneratedResourcesMap(), efestoResource.getModelType());
             ContextStorage.putEfestoCompilationContext(toReturn, compilationContext);
-            compilationContext.createIndexFiles(Paths.get("kafka-efesto/kafka-efesto-client/target/classes")).values();
+            //compilationContext.createIndexFiles(Paths.get("kafka-efesto/kafka-efesto-client/target/classes")).values();
             return toReturn;
         } catch (Exception e) {
             logger.error("Failed to process {}", fileName, e);

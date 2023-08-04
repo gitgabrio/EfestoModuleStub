@@ -25,8 +25,8 @@ import org.kie.efesto.runtimemanager.api.service.KieRuntimeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import stub.module.api.StubExecutor;
-import stub.module.runtime.model.StubInput;
-import stub.module.runtime.model.StubOutput;
+import stub.module.runtime.api.model.StubInput;
+import stub.module.runtime.api.model.StubOutput;
 
 import java.util.Optional;
 

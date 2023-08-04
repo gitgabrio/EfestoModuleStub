@@ -34,6 +34,11 @@
       </dependency>
       <dependency>
         <groupId>org.kie.efesto</groupId>
+        <artifactId>stub-module-runtime-api</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.kie.efesto</groupId>
         <artifactId>stub-module-runtime</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -152,6 +157,7 @@
   <modules>
     <module>stub-module-api</module>
     <module>stub-module-compilation</module>
+    <module>stub-module-runtime-api</module>
     <module>stub-module-runtime</module>
     <module>stub-module-tests</module>
     <module>kafka-efesto</module>

@@ -13,33 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package stub.module.runtime.model;
+package stub.module.runtime.api.model;
 
 import org.kie.efesto.common.api.identifiers.ModelLocalUriId;
 import org.kie.efesto.runtimemanager.api.model.BaseEfestoInput;
-import org.kie.efesto.runtimemanager.api.model.EfestoInput;
-import org.kie.efesto.runtimemanager.api.model.EfestoMapInputDTO;
 
-import java.util.Objects;
+public class StubInput extends BaseEfestoInput<String> {
 
-public class JdrlInput extends BaseEfestoInput<EfestoMapInputDTO> {
-
-
-    public JdrlInput(ModelLocalUriId modelLocalUriId, EfestoMapInputDTO inputData) {
+    public StubInput(ModelLocalUriId modelLocalUriId, String inputData) {
         super(modelLocalUriId, inputData);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getModelLocalUriId(), getInputData());
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (! (obj instanceof JdrlInput)) {
-            return false;
-        }
-        JdrlInput that = (JdrlInput) obj;
-        return Objects.equals(getModelLocalUriId(), that.getModelLocalUriId()) && Objects.equals(getInputData(), that.getInputData());
     }
 }
